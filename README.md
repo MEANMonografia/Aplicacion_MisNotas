@@ -1,0 +1,2 @@
+# Aplicación MisNotas
+**Documentación pendiente**

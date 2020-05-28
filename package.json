@@ -1,0 +1,32 @@
+{
+  "name": "misnotas",
+  "version": "0.1.0",
+  "description": "Aplicacion para guardar notas personales que sirve de ilustracion sobre un login sencillo y operaciones CRUD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://RickAr2@bitbucket.org/RickAr2/misnotas.git"
+  },
+  "keywords": [
+    "MongoDB",
+    "ExpressJS",
+    "AngularJS",
+    "NodeJS",
+    "MEAN",
+    "JavaScript"
+  ],
+  "contributors": [
+    "Ricardo José Guevara Aragón",
+    "Carlos Alberto Elvir Cano",
+    "Román Morales"
+  ],
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/RickAr2/misnotas#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.16"
+  }
+}
