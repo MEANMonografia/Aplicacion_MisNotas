@@ -17,6 +17,11 @@ app.get('/', function(req, res, next){
 
 app.use('/api', api);
 
+app.use((req, res, next)=>{
+    res.send("Oops! Error 404: Parece que esta ruta es incorrecta");
+    res.end();
+});
+
 app.listen(PORT, function(){
     console.log(`Escuchando en localhost:${PORT}`);
 });
