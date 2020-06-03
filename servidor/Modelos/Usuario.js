@@ -28,20 +28,27 @@ let usuarioEsquema = new Schema({
     notas: [notaEsquema]
 });
 
+// Iniciar sesion con un usuario y una contraseña
+// La retrollamada tendría la firma:
+// function(error, token)
 usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
     let proxy = this;
+    // Verificar que el usuario existe
     proxy.findOne({username: usuario}, function(error, user){
         if(error) return retrollamada(error, null);
         if(!user) return retrollamada(new Error("No se encuentra el nombre de usuario"), null);
+        // Verificar que la contraseña es correcta
         const hashPass = crypto.createHash('sha256');
         hashPass.update(pass + user.sal);
         let hashedPass = hash.digest('hex');
         if(user.pass != hashedPass){
             return retrollamada(new Error("Pass incorrecto"), null);
         }
+        // Verificar si la sesión existe y sigue siendo válida (de lo contrario, crear una)
         SesionModelo.esValidaYExiste(usuario, function(error, token, existe){
             if(error) return retrollamada(error, null);
             if(existe) return retrollamada(null, token);
+            // Generar un nuevo Token
             const tokenHash = crypto.createHash('sha256');
             tokenHash.update(hashedPass + Date.now().toString());
             // Construir nueva sesión utilizando la validez global
@@ -54,6 +61,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
                 periodoValidez: Globales.VALIDEZ_SESION
             });
 
+            // Insertar la nueva sesion en la base de datos y retornar el token generado
             nuevaSesion.save(function(saveError, documento){
                 if(saveError) return retrollamada(saveError, null);
                 retrollamada(null, documento.token);
@@ -62,7 +70,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
     });
 };
 
-usuarioEsquema.statics.crearUsuario = function(usuarioDoc, retrollamada){
+usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
     // Crear el documento de Usuario
     // Crear una sesión y retornar la sesión
 };
