@@ -70,9 +70,46 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
     });
 };
 
+// Crear un usuario y automáticamente iniciar sesión
+// La retrollamada posee la misma firma anterior:
+// function(error, token)
 usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
     // Crear el documento de Usuario
-    // Crear una sesión y retornar la sesión
+    let UsuarioModel = this;
+    const propiedadesRecibidas = Object.getOwnPropertyNames(usuarioObj);
+
+    // Crear un arreglo de validación (true si la propiedad existe, false si no)
+    const validaciones = ['username', 'pass', 'primerNombre'].map(function(valor){
+        return propiedadesRecibidas.indexOf(valor) > -1;
+    });
+
+    // Si hace falta alguna de las propiedades obligatorias, retornar un error
+    if(validaciones.indexOf(false) > -1) {
+        return retrollamada(new Error("No se recibieron todas las propiedades obligatorias"), null);
+    }
+    
+    // Crear el objeto de usuario base
+    let prototipoUsuario = {
+        username: usuarioObj.username,
+        pass: usuarioObj.pass,
+        primerNombre: usuarioObj.primerNombre,
+        sal: new Date().toString(),
+        notas: []
+    };
+
+    // Agregar el valor opcional al objeto de usuario(si existe)
+    if(usuarioObj.primerApellido) prototipoUsuario.primerApellido = usuarioObj.primerApellido;
+
+    // Crear un documento
+    let nuevoUsuario = new UsuarioModel(prototipoUsuario);
+
+    // Insertar el documento en la base de datos
+    nuevoUsuario.save(function(saveError, documento){
+        if(saveError) return retrollamada(saveError, null);
+
+        // Crear una sesión y retornar la sesión a través de la retrollamada
+        UsuarioModel.iniciarSesion(documento.username, documento.pass, retrollamada);
+    });
 };
 
 module.exports = mongoose.model('Usuario', usuarioEsquema);
