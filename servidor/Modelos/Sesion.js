@@ -35,10 +35,10 @@ sesionEsquema.statics.esValidaYExiste = function(username, retrollamada){
     proxy.findOne({nombreUsuario: username, valido: true}, function(error, sesion){
         if(error) return retrollamada(error, null, false);
         if(!sesion) return retrollamada(null, null, false);
-        let diferenciaDeFechas = Date.now() - sesion.fechaCreacion;
-        if(diferenciaDeFechas < periodoValidez){
+        let diferenciaDeFechas = Date.now() - sesion.fechaCreacion.getTime();
+        if(diferenciaDeFechas < sesion.periodoValidez){
             proxy.updateOne({_id: sesion._id}, 
-                {$set: {fechaCreacion: Date.now(), fechaExpiracion: Date.now() + sesion.periodoValidez}}, 
+                {$set: {fechaCreacion: new Date(), fechaExpiracion: new Date(Date.now() + sesion.periodoValidez)}}, 
                 function(error){
                 if(error) return retrollamada(error, null, false);
                 else retrollamada(null, sesion.token, true);
