@@ -40,7 +40,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
         // Verificar que la contraseña es correcta
         const hashPass = crypto.createHash('sha256');
         hashPass.update(pass + user.sal);
-        let hashedPass = hash.digest('hex');
+        let hashedPass = hashPass.digest('hex');
         if(user.pass != hashedPass){
             return retrollamada(new Error("Pass incorrecto"), null);
         }
@@ -88,12 +88,17 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
         return retrollamada(new Error("No se recibieron todas las propiedades obligatorias"), null);
     }
     
+    // Generar el hash de la contraseña
+    let nuevoHash = crypto.createHash('sha256');
+    let sal = new Date().toString();
+    nuevoHash.update(usuario.pass + sal);
+
     // Crear el objeto de usuario base
     let prototipoUsuario = {
         username: usuarioObj.username,
-        pass: usuarioObj.pass,
+        pass: nuevoHash.digest('hex'),
+        sal,
         primerNombre: usuarioObj.primerNombre,
-        sal: new Date().toString(),
         notas: []
     };
 
