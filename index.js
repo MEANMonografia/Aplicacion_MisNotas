@@ -1,10 +1,18 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const api = require('./servidor/Api');
 
 const app = express();
 const PORT = 5000;
+
+mongoose.connect('mongodb://localhost:27017/aplicacionFinal', {useNewUrlParser: true, useUnifiedTopology: true},
+    function(mongoError){
+        if(mongoError) return console.error(mongoError.message);
+        console.log("Conexión exitosa a la BD!");
+    }
+);
 
 app.use(express.static(path.join(__dirname, 'www')));
 

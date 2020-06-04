@@ -10,7 +10,8 @@ let usuarioEsquema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     pass: {
         type: String,
@@ -53,7 +54,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
             tokenHash.update(hashedPass + Date.now().toString());
             // Construir nueva sesión utilizando la validez global
             let nuevaSesion = new SesionModelo({
-                nombreUsuario: usuario,
+                username: usuario,
                 token: tokenHash.digest('hex'),
                 valido: true,
                 fechaCreacion: new Date(),

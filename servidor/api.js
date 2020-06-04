@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const Usuario = require('./Modelos/Usuario');
+
 router.use(express.json());
 
 const NO_DATA_ERROR = {
     confirmacion: false,
     consulta: null,
-    error: "No se recibieron datos de entrada"
+    error: "No se recibieron datos de entrada completos y válidos"
 };
 
 // Contestar a las llamadas a localhost/api aunque no se reciban datos
@@ -25,15 +27,18 @@ router.post('/', (req, res, next)=>{
 
 // Crear un hash y registrar en la base de datos la sesión
 // Entrada esperada { usuario, pass }
-router.post('/login', (req, res, next)=>{
+router.post('/login', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-    // TODO: Agregar lógica para: 
-    // * Confirmar que el usuario no tenga un token ya
-    // * Si el usuario no lo tiene, generarlo e insertar el objeto de sesion
-    // * retornar el token al cliente
+    Usuario.iniciarSesion(req.body.username, req.body.pass, function(error, token){
+        res.json({
+            error: error? error.message: null,
+            token
+        });
+        res.end();
+    });
 });
 
 router.post('/registrar', (req, res, next)=>{
@@ -41,10 +46,18 @@ router.post('/registrar', (req, res, next)=>{
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-    // TODO: Agregar lógica para: 
-    // * Confirmar que el usuario no exista
-    // * Insertar el nuevo usuario y abrir una sesion
-    // * retornar el token al cliente
+    Usuario.crearUsuario({
+        username: req.body.username,
+        pass: req.body.pass,
+        primerNombre: req.body.primerNombre,
+        primerApellido: req.body.primerApellido
+    }, function(error, token){
+        res.json({
+            error: error ? error.message: null,
+            token
+        });
+        res.end();
+    });
 });
 
 module.exports = router;

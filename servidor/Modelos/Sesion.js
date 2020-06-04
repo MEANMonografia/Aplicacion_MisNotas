@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let sesionEsquema = new Schema({
-    nombreUsuario: {
+    username: {
         type: String,
         required: true,
+        lowercase: true
     },
     token: {
         type: String,
@@ -32,7 +33,7 @@ let sesionEsquema = new Schema({
 
 sesionEsquema.statics.esValidaYExiste = function(username, retrollamada){
     let proxy = this;
-    proxy.findOne({nombreUsuario: username, valido: true}, function(error, sesion){
+    proxy.findOne({username: username, valido: true}, function(error, sesion){
         if(error) return retrollamada(error, null, false);
         if(!sesion) return retrollamada(null, null, false);
         let diferenciaDeFechas = Date.now() - sesion.fechaCreacion.getTime();
