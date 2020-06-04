@@ -14,6 +14,10 @@ let notaEsquema = new Schema({
     ultimaEdicion: {
         type: Date,
         required: true
+    },
+    esFija: {
+        type: Boolean,
+        required: true
     }
 });
 
