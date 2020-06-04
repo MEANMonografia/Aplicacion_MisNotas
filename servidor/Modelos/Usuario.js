@@ -42,7 +42,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
         hashPass.update(pass + user.sal);
         let hashedPass = hashPass.digest('hex');
         if(user.pass != hashedPass){
-            return retrollamada(new Error("Pass incorrecto"), null);
+            return retrollamada(new Error(`Pass Incorrecto.`), null);
         }
         // Verificar si la sesión existe y sigue siendo válida (de lo contrario, crear una)
         SesionModelo.esValidaYExiste(usuario, function(error, token, existe){
@@ -91,7 +91,7 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
     // Generar el hash de la contraseña
     let nuevoHash = crypto.createHash('sha256');
     let sal = new Date().toString();
-    nuevoHash.update(usuario.pass + sal);
+    nuevoHash.update(usuarioObj.pass + sal);
 
     // Crear el objeto de usuario base
     let prototipoUsuario = {
@@ -113,7 +113,7 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
         if(saveError) return retrollamada(saveError, null);
 
         // Crear una sesión y retornar la sesión a través de la retrollamada
-        UsuarioModel.iniciarSesion(documento.username, documento.pass, retrollamada);
+        UsuarioModel.iniciarSesion(documento.username, usuarioObj.pass, retrollamada);
     });
 };
 

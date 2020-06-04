@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 let sesionEsquema = new Schema({
     nombreUsuario: {
-        type: mongoose.Types.ObjectId,
-        required: true
+        type: String,
+        required: true,
     },
     token: {
         type: String,
