@@ -10,7 +10,8 @@ let usuarioEsquema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     pass: {
         type: String,
