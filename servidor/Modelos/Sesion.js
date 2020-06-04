@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let sesionEsquema = new Schema({
-    nombreUsuario: {
+    username: {
         type: String,
         required: true,
+        lowercase: true
     },
     token: {
         type: String,
