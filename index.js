@@ -18,7 +18,7 @@ app.get('/', function(req, res, next){
 app.use('/api', api);
 
 app.use((req, res, next)=>{
-    res.send("Oops! Error 404: Parece que esta ruta es incorrecta");
+    res.status(404).write("Oops! Error 404: Parece que esta ruta es incorrecta");
     res.end();
 });
 
