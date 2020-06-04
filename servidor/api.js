@@ -28,11 +28,11 @@ router.post('/', (req, res, next)=>{
 // Crear un hash y registrar en la base de datos la sesión
 // Entrada esperada { usuario, pass }
 router.post('/login', function(req, res, next){
-    if(!req.body || !req.body.usuario || !req.body.pass){
+    if(!req.body){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-    Usuario.iniciarSesion(req.body.usuario, req.body.pass, function(error, token){
+    Usuario.iniciarSesion(req.body.username, req.body.pass, function(error, token){
         res.json({
             error: error? error.message: null,
             token
