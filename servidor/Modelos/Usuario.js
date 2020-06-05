@@ -46,9 +46,9 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
             return retrollamada(new Error(`Pass Incorrecto.`), null);
         }
         // Verificar si la sesión existe y sigue siendo válida (de lo contrario, crear una)
-        SesionModelo.esValidaYExiste(usuario, function(error, token, existe){
+        SesionModelo.esValidaYExiste(usuario, function(error, token){
             if(error) return retrollamada(error, null);
-            if(existe) return retrollamada(null, token);
+            if(token) return retrollamada(null, token);
             // Generar un nuevo Token
             const tokenHash = crypto.createHash('sha256');
             tokenHash.update(hashedPass + Date.now().toString());
@@ -118,12 +118,11 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
     });
 };
 
-// Crear una nota con los datos Titulo:String, Contenido:String, esFija:Boolean
+// Encontrar al usuario dueño de un token y crear una nueva nota
 // La firma de la retrollamada es la siguiente:
 // function(error, objetoNota)
-usuarioEsquema.methods.crearNota = function(datosNota, retrollamada){
+usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
     let proxy = this;
-
     // Realizando las validaciones básicas
     const propiedadesRecibidas = Object.getOwnPropertyNames(datosNota);
     let validaciones = ['titulo', 'contenido', 'esFija'].map(function(valor){
@@ -133,6 +132,30 @@ usuarioEsquema.methods.crearNota = function(datosNota, retrollamada){
     if(validaciones.indexOf(false)){
         return retrollamada(new Error("No se recibieron los datos obligatorios completos."), null);
     }
+
+    // Encontrando la sesion por token
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("No existe una sesion valida pertenenciente al token recibido."), null);
+        // Encontrar el usuario asociado a la sesion
+        proxy.findOne({username: sesion.username}, function(findError, usuario){
+            if(findError) return retrollamada(findError, null);
+            // Insertar la nota y retornar el documento de la nueva nota insertada
+            usuario.insertarNota(datosNota, function(insertarError, docNota){
+                if(insertarError) return retrollamada(insertarError, null);
+                if(!docNota) return retrollamada(new Error("No se obtuvo el documento de la nota insertada"), null);
+                retrollamada(null, docNota);
+            });
+        });
+    });
+};
+
+
+// Insertar una nota con los datos Titulo:String, Contenido:String, esFija:Boolean
+// La firma de la retrollamada es la siguiente:
+// function(error, objetoNota)
+usuarioEsquema.methods.insertarNota = function(datosNota, retrollamada){
+    let proxy = this;
 
     // Agregar la nota al arreglo del usuario
     proxy.notas.push(datosNota);
