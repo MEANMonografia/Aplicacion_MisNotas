@@ -2,14 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const Usuario = require('./Modelos/Usuario');
+const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 
 router.use(express.json());
-
-const NO_DATA_ERROR = {
-    confirmacion: false,
-    consulta: null,
-    error: "No se recibieron datos de entrada completos y válidos"
-};
 
 // Contestar a las llamadas a localhost/api aunque no se reciban datos
 router.post('/', (req, res, next)=>{

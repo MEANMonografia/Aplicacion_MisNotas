@@ -1,7 +1,15 @@
 const router = require('express').Router();
 
-router.post('/crear', (req, res, next)=>{
+const Usuario = require('./Modelos/Usuario');
+const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 
+router.post('/crear', (req, res, next)=>{
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+    } else {
+        // TODO: Llamar a la funcion para crear nota
+    }
+    res.end();
 });
 
 router.post('/modificar', (req, res, next)=>{
