@@ -157,8 +157,17 @@ usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
 usuarioEsquema.methods.insertarNota = function(datosNota, retrollamada){
     let proxy = this;
 
+    // Crear el objeto nota
+    let nuevaNota = {
+        titulo: datosNota.titulo,
+        contenido: datosNota.contenido,
+        fechaCreacion: new Date(),
+        ultimaEdicion: new Date(),
+        esFija: datosNota.esFija
+    };
+
     // Agregar la nota al arreglo del usuario
-    proxy.notas.push(datosNota);
+    proxy.notas.push(nuevaNota);
 
     // Guardar los cambios en la base de datos
     proxy.save(function(saveError, doc){
