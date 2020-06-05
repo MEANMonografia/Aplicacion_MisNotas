@@ -118,4 +118,32 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
     });
 };
 
+// Crear una nota con los datos Titulo:String, Contenido:String, esFija:Boolean
+// La firma de la retrollamada es la siguiente:
+// function(error, objetoNota)
+usuarioEsquema.methods.crearNota = function(datosNota, retrollamada){
+    let proxy = this;
+
+    // Realizando las validaciones básicas
+    const propiedadesRecibidas = Object.getOwnPropertyNames(datosNota);
+    let validaciones = ['titulo', 'contenido', 'esFija'].map(function(valor){
+        return propiedadesRecibidas.indexOf(valor) > -1;
+    });
+
+    if(validaciones.indexOf(false)){
+        return retrollamada(new Error("No se recibieron los datos obligatorios completos."), null);
+    }
+
+    // Agregar la nota al arreglo del usuario
+    proxy.notas.push(datosNota);
+
+    // Guardar los cambios en la base de datos
+    proxy.save(function(saveError, doc){
+        if(saveError) return retrollamada(saveError, null);
+
+        // Retornar la última nota insertada (para que contenga el _id generado por mongo)
+        retrollamada(null, doc.notas[doc.notas.length - 1]);
+    });
+};
+
 module.exports = mongoose.model('Usuario', usuarioEsquema);
