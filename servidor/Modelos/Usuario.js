@@ -131,9 +131,9 @@ usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
     let validaciones = ['titulo', 'contenido', 'esFija'].map(function(valor){
         return propiedadesRecibidas.indexOf(valor) > -1;
     });
-
-    if(validaciones.indexOf(false)){
-        return retrollamada(new Error("No se recibieron los datos obligatorios completos."), null);
+    
+    if(validaciones.indexOf(false) > -1){
+        return retrollamada(new Error(`Datos recibidos incorrectos/incompletos: ${JSON.stringify(propiedadesRecibidas)}`), null);
     }
 
     // Encontrando la sesion por token

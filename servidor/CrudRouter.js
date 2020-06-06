@@ -15,15 +15,15 @@ const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 router.post('/crear', (req, res, next)=>{
     if(!req.body){
         res.json(NO_DATA_ERROR);
-    } else {
-        Usuario.crearNota(req.body.token, req.body.estructuraNota, function(crearError, estructuraNota){
-            res.json({
-                error: crearError? crearError.message: null,
-                estructuraNota
-            });
-        });
+        return res.end();
     }
-    res.end();
+    Usuario.crearNota(req.body.token, req.body.estructuraNota, function(crearError, estructuraNota){
+        res.json({
+            error: crearError? crearError.message: null,
+            estructuraNota
+        });
+        res.end();
+    });
 });
 
 router.post('/modificar', (req, res, next)=>{
