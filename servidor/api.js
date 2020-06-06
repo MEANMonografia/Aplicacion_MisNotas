@@ -22,7 +22,10 @@ router.post('/', (req, res, next)=>{
 });
 
 // Crear un hash y registrar en la base de datos la sesión
-// Entrada esperada { usuario, pass }
+// Formato esperado de la petición:
+// { username: String, pass: String }
+// Formato de la respuesta:
+// { error: String, token: String}
 router.post('/login', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
@@ -37,6 +40,11 @@ router.post('/login', function(req, res, next){
     });
 });
 
+// Crear un hash y registrar en la base de datos la sesión
+// Formato esperado de la petición:
+// { username: String, pass: String, primerNombre: String, primerApellido?: String }
+// Formato de la respuesta:
+// { error: String, token: String}
 router.post('/registrar', (req, res, next)=>{
     if(!req.body){
         res.json(NO_DATA_ERROR);

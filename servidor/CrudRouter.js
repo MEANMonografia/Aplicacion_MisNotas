@@ -26,19 +26,40 @@ router.post('/crear', (req, res, next)=>{
     });
 });
 
-router.post('/modificar', (req, res, next)=>{
+// Formato esperado de la peticion:
+// { token: String, estructuraNota: {_id: String, titulo: String, contenido: String, esFija: Boolean}}
+// Formato de la respuesta:
+// { 
+//   error: String, 
+//   estructuraNota: {
+//     _id: String, titulo: String, contenido: String, fechaCreacion: Date, ultimaEdicion: String, esFija: Boolean
+//   }
+// }
+router.post('/modificar', function(req, res, next){
 
 });
 
-router.post('/eliminar', (req, res, next)=>{
+// Formato esperado de la peticion:
+// { token: String, ids: [_id: String]}
+// Formato de la respuesta:
+// { error: String, eliminados: Number}
+router.post('/eliminar', function(req, res, next){
 
 });
 
-router.post('/getnotas', (req, res, next)=>{
+// Formato esperado de la peticion:
+// { token: String }
+// Formato de la respuesta:
+// { error: String, notas: [estructuraNota]}
+router.post('/getnotas', function(req, res, next){
 
 });
 
-router.post('/setnotasfijas', (req, res, next)=>{
+// Formato esperado de la peticion:
+// { token: String, ids: [_id: String] }
+// Formato de la respuesta:
+// { error: String, fijadas: Number}
+router.post('/setnotasfijas', function(req, res, next){
 
 });
 
