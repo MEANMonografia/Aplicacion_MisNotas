@@ -31,25 +31,49 @@ let sesionEsquema = new Schema({
     }
 });
 
+// Determinar si la sesión actual es válida
+// La firma de la retrollamada es:
+// function(error: Error, esValida: Boolean)
+sesionEsquema.methods.esValida = function(retrollamada){
+    let sesion = this;
+    let diferenciaDeFechas = Date.now() - sesion.fechaCreacion.getTime();
+    if(diferenciaDeFechas < sesion.periodoValidez){
+        sesion.fechaCreacion = new Date();
+        sesion.fechaExpiracion = new Date(Date.now() + sesion.periodoValidez);
+    } else {
+        sesion.valido = false;
+    }
+
+    sesion.save(function(saveError, docSesion){
+        if(saveError) return retrollamada(saveError, false);
+        retrollamada(null, true);
+    });
+};
+
+// Determinar si existe una sesion válida asociada al usuario solicitado
+// La firma de la retrollamada es:
+// function(error: Error, token: String)
 sesionEsquema.statics.esValidaYExiste = function(username, retrollamada){
     let proxy = this;
     proxy.findOne({username: username, valido: true}, function(error, sesion){
-        if(error) return retrollamada(error, null, false);
-        if(!sesion) return retrollamada(null, null, false);
-        let diferenciaDeFechas = Date.now() - sesion.fechaCreacion.getTime();
-        if(diferenciaDeFechas < sesion.periodoValidez){
-            proxy.updateOne({_id: sesion._id}, 
-                {$set: {fechaCreacion: new Date(), fechaExpiracion: new Date(Date.now() + sesion.periodoValidez)}}, 
-                function(error){
-                if(error) return retrollamada(error, null, false);
-                else retrollamada(null, sesion.token, true);
-            });
-        } else {
-            proxy.updateOne({_id: sesion._id}, { $set: {valido: false}}, function(error){
-                if(error) return retrollamada(error, null, false);
-                retrollamada(null, null, false);
-            });
-        }
+        if(error) return retrollamada(error, null);
+        if(!sesion) return retrollamada(null, null);
+        sesion.esValida(function(validaError, validez){
+            if(validaError) return retrollamada(validaError, null);
+            if(!validez) return retrollamada(null, null);
+            retrollamada(null, sesion.token);
+        });
+    });
+};
+
+// Utilizando un token en lugar de usuario, determinar si la sesion existe y sigue siendo valida
+// La firma de la retrollamada es la siguiente:
+// function(error: Error, objSesion: Object)
+sesionEsquema.statics.encontrarPorToken = function(token, retrollamada){
+    let proxy = this;
+    proxy.findOne({ token: token, valido: true}, function(findError, sesion){
+        if(findError) return retrollamada(findError, null);
+        retrollamada(null, sesion);
     });
 };
 

@@ -12,6 +12,13 @@ const parsearHoras = function(horas){
 
 const VALIDEZ_SESION = parsearMinutos(10);
 
+const NO_DATA_ERROR = {
+    confirmacion: false,
+    consulta: null,
+    error: "No se recibieron datos de entrada completos y válidos"
+};
+
 module.exports = {
-    VALIDEZ_SESION
+    VALIDEZ_SESION,
+    NO_DATA_ERROR
 };
