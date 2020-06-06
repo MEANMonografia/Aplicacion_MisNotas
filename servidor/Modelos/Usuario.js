@@ -124,6 +124,9 @@ usuarioEsquema.statics.crearUsuario = function(usuarioObj, retrollamada){
 usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
     let proxy = this;
     // Realizando las validaciones básicas
+    if(!datosNota){
+        return retrollamada(new Error("No se recibio el campo esperado 'estructuraNota'"), null);
+    }
     const propiedadesRecibidas = Object.getOwnPropertyNames(datosNota);
     let validaciones = ['titulo', 'contenido', 'esFija'].map(function(valor){
         return propiedadesRecibidas.indexOf(valor) > -1;

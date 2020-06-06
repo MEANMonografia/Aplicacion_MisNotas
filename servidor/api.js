@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const CrudRouter = require('./CrudRouter');
 const Usuario = require('./Modelos/Usuario');
 const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 
@@ -54,5 +55,7 @@ router.post('/registrar', (req, res, next)=>{
         res.end();
     });
 });
+
+router.use('/crud', CrudRouter);
 
 module.exports = router;

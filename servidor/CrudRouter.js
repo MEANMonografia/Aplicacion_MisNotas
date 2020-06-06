@@ -16,7 +16,7 @@ router.post('/crear', (req, res, next)=>{
     if(!req.body){
         res.json(NO_DATA_ERROR);
     } else {
-        Usuario.crearNota(req.body.token, req.body.datosNota, function(crearError, estructuraNota){
+        Usuario.crearNota(req.body.token, req.body.estructuraNota, function(crearError, estructuraNota){
             res.json({
                 error: crearError? crearError.message: null,
                 estructuraNota
