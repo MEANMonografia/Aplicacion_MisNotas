@@ -11,8 +11,9 @@
     <link rel="stylesheet" type="text/css" href="./css/login.css">
     <script src="./javascript/main.js"></script>
     <script src="./javascript/controladorIndex.js"></script>
+    <script src="./javascript/inicializacionLogin.js"></script>
 </head>
-<body ng-controller="indexController as indexC">
+<body ng-controller="controladorIndex as indexC">
     <div class="bg-image"></div>
     <div class="wrapper">
         <div id="formContent">
@@ -22,8 +23,8 @@
                 </div>
                 <input type="text" ng-model="indexC.txtUsername" name="login" placeholder="Nombre de Usuario">
                 <input type="text" ng-model="indexC.txtPassword" name="login" placeholder="Contraseña">
-                <p>{{indexC.txtUsername}}</p>
-                <input type="submit" id="btnIngresar" value="Ingresar">
+                <p ng-bind="indexC.mensajeError"></p>
+                <button ng-click="indexC.login($event)">Ingresar</button>
             </form>
             <div id="formFooter">
                 <span>¿Eres nuevo usuario?</span> <a href="#">¡Registrate acá!</a>

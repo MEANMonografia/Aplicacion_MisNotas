@@ -25,6 +25,8 @@ h2 {
 
 /* STRUCTURE */
 
+/* Chequear altura de la caja principal */
+
 .wrapper {
     display: flex;
     align-items: center;
