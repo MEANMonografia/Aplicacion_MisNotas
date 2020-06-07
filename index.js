@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const api = require('./servidor/Api');
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 
 mongoose.connect('mongodb://localhost:27017/aplicacionFinal', {useNewUrlParser: true, useUnifiedTopology: true},
     function(mongoError){
