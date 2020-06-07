@@ -64,7 +64,13 @@ router.post('/getnotas', function(req, res, next){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-
+    Usuario.getNotas(req.body.token, function(getError, notas){
+        res.json({
+            error: getError? getError.message: null,
+            notas: notas
+        });
+        res.end();
+    });
 });
 
 // Formato esperado de la peticion:
