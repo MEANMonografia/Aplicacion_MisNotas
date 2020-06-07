@@ -43,7 +43,7 @@ usuarioEsquema.statics.iniciarSesion = function(usuario, pass, retrollamada){
         hashPass.update(pass + user.sal);
         let hashedPass = hashPass.digest('hex');
         if(user.pass != hashedPass){
-            return retrollamada(new Error(`Pass Incorrecto.`), null);
+            return retrollamada(new Error("Pass Incorrecto."), null);
         }
         // Verificar si la sesión existe y sigue siendo válida (de lo contrario, crear una)
         SesionModelo.esValidaYExiste(usuario, function(error, token){
@@ -133,7 +133,7 @@ usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
     });
     
     if(validaciones.indexOf(false) > -1){
-        return retrollamada(new Error(`Datos recibidos incorrectos/incompletos: ${JSON.stringify(propiedadesRecibidas)}`), null);
+        return retrollamada(new Error("Datos recibidos incorrectos/incompletos"), null);
     }
 
     // Encontrando la sesion por token

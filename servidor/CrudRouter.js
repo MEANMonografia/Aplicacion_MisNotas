@@ -12,7 +12,7 @@ const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 //     _id: String, titulo: String, contenido: String, fechaCreacion: Date, ultimaEdicion: String, esFija: Boolean
 //   }
 // }
-router.post('/crear', (req, res, next)=>{
+router.post('/crear', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
         return res.end();
@@ -20,7 +20,7 @@ router.post('/crear', (req, res, next)=>{
     Usuario.crearNota(req.body.token, req.body.estructuraNota, function(crearError, estructuraNota){
         res.json({
             error: crearError? crearError.message: null,
-            estructuraNota
+            estructuraNota: estructuraNota
         });
         res.end();
     });
