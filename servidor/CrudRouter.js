@@ -36,6 +36,10 @@ router.post('/crear', (req, res, next)=>{
 //   }
 // }
 router.post('/modificar', function(req, res, next){
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+        return res.end();
+    }
 
 });
 
@@ -44,6 +48,10 @@ router.post('/modificar', function(req, res, next){
 // Formato de la respuesta:
 // { error: String, eliminados: Number}
 router.post('/eliminar', function(req, res, next){
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+        return res.end();
+    }
 
 });
 
@@ -52,6 +60,10 @@ router.post('/eliminar', function(req, res, next){
 // Formato de la respuesta:
 // { error: String, notas: [estructuraNota]}
 router.post('/getnotas', function(req, res, next){
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+        return res.end();
+    }
 
 });
 
@@ -60,7 +72,11 @@ router.post('/getnotas', function(req, res, next){
 // Formato de la respuesta:
 // { error: String, fijadas: Number}
 router.post('/setnotasfijas', function(req, res, next){
-
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+        return res.end();
+    }
+    
 });
 
 module.exports = router;
