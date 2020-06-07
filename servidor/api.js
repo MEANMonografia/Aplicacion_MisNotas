@@ -8,7 +8,7 @@ const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 router.use(express.json());
 
 // Contestar a las llamadas a localhost/api aunque no se reciban datos
-router.post('/', (req, res, next)=>{
+router.post('/', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
     } else {
@@ -34,7 +34,7 @@ router.post('/login', function(req, res, next){
     Usuario.iniciarSesion(req.body.username, req.body.pass, function(error, token){
         res.json({
             error: error? error.message: null,
-            token
+            token: token
         });
         res.end();
     });
@@ -45,7 +45,7 @@ router.post('/login', function(req, res, next){
 // { username: String, pass: String, primerNombre: String, primerApellido?: String }
 // Formato de la respuesta:
 // { error: String, token: String}
-router.post('/registrar', (req, res, next)=>{
+router.post('/registrar', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
         return res.end();
@@ -58,7 +58,7 @@ router.post('/registrar', (req, res, next)=>{
     }, function(error, token){
         res.json({
             error: error ? error.message: null,
-            token
+            token: token
         });
         res.end();
     });

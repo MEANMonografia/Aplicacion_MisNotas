@@ -19,6 +19,6 @@ const NO_DATA_ERROR = {
 };
 
 module.exports = {
-    VALIDEZ_SESION,
-    NO_DATA_ERROR
+    VALIDEZ_SESION: VALIDEZ_SESION,
+    NO_DATA_ERROR: NO_DATA_ERROR
 };
