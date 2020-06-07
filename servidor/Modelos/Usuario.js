@@ -140,14 +140,19 @@ usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
     SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
         if(encontrarError) return retrollamada(encontrarError, null);
         if(!sesion) return retrollamada(new Error("No existe una sesion valida pertenenciente al token recibido."), null);
-        // Encontrar el usuario asociado a la sesion
-        proxy.findOne({username: sesion.username}, function(findError, usuario){
-            if(findError) return retrollamada(findError, null);
-            // Insertar la nota y retornar el documento de la nueva nota insertada
-            usuario.insertarNota(datosNota, function(insertarError, docNota){
-                if(insertarError) return retrollamada(insertarError, null);
-                if(!docNota) return retrollamada(new Error("No se obtuvo el documento de la nota insertada"), null);
-                retrollamada(null, docNota);
+        // Verificar si la sesion es válida
+        sesion.esValida(function(validaError, esValida){
+            if(validaError) return retrollamada(validaError, null);
+            if(!esValida) return retrollamada(new Error("Token expirado"), null);
+            // Encontrar el usuario asociado a la sesion
+            proxy.findOne({username: sesion.username}, function(findError, usuario){
+                if(findError) return retrollamada(findError, null);
+                // Insertar la nota y retornar el documento de la nueva nota insertada
+                usuario.insertarNota(datosNota, function(insertarError, docNota){
+                    if(insertarError) return retrollamada(insertarError, null);
+                    if(!docNota) return retrollamada(new Error("No se obtuvo el documento de la nota insertada"), null);
+                    retrollamada(null, docNota);
+                });
             });
         });
     });

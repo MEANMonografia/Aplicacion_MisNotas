@@ -43,10 +43,11 @@ sesionEsquema.methods.esValida = function(retrollamada){
     } else {
         sesion.valido = false;
     }
+    let respuesta = sesion.valido;
 
     sesion.save(function(saveError, docSesion){
         if(saveError) return retrollamada(saveError, false);
-        retrollamada(null, true);
+        retrollamada(null, respuesta);
     });
 };
 
