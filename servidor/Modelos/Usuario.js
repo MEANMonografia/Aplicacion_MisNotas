@@ -186,4 +186,30 @@ usuarioEsquema.methods.insertarNota = function(datosNota, retrollamada){
     });
 };
 
+// Obtener todas las notas de forma [estructuraNota]
+// La firma de la retrollamada es la siguiente:
+// function(error: Error, notas: [estructuraNota])
+usuarioEsquema.statics.getNotas = function(token, retrollamada){
+    let proxy = this;
+    if(!token) return retrollamada(new Error("No se recibió un token"), null);
+
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("No existe una sesion valida pertenenciente al token recibido."), null);
+
+        sesion.esValida(function(validaError, esValida){
+            if(validaError) return retrollamada(validaError, null);
+            if(!esValida) return retrollamada(new Error("Token expirado."), null);
+            
+            // Si la sesión es válida, usar el nombre de usuario para obtener un usuario
+            proxy.findOne({username: sesion.username}, function(findError, usuario){
+                if(findError) return retrollamada(findError, null);
+                
+                // Retormar el arreglo de notas
+                retrollamada(null, usuario.notas);
+            });
+        });
+    });
+};
+
 module.exports = mongoose.model('Usuario', usuarioEsquema);
