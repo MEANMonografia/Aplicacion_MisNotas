@@ -40,7 +40,13 @@ router.post('/modificar', function(req, res, next){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-
+    Usuario.actualizar(req.body.token, req.body.estructuraNota, function(modificarError, notaActual){
+        res.json({
+            error: modificarError? modificarError.message: null,
+            estructuraNota: notaActual
+        });
+        res.end();
+    });
 });
 
 // Formato esperado de la peticion:

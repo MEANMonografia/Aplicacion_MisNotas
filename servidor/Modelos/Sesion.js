@@ -74,7 +74,12 @@ sesionEsquema.statics.encontrarPorToken = function(token, retrollamada){
     let proxy = this;
     proxy.findOne({ token: token, valido: true}, function(findError, sesion){
         if(findError) return retrollamada(findError, null);
-        retrollamada(null, sesion);
+        if(!sesion) return retrollamada(new Error("Token inválido o expirado"), null);
+        sesion.esValida(function(validaError, valida){
+            if(validaError) return retrollamada(validaError, null);
+            if(!valida) return retrollamada(new Error("Token expirado"), null);
+            retrollamada(null, sesion);
+        });
     });
 };
 
