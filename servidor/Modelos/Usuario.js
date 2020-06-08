@@ -196,17 +196,51 @@ usuarioEsquema.statics.getNotas = function(token, retrollamada){
     SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
         if(encontrarError) return retrollamada(encontrarError, null);
         if(!sesion) return retrollamada(new Error("No existe una sesion valida pertenenciente al token recibido."), null);
-
-        sesion.esValida(function(validaError, esValida){
-            if(validaError) return retrollamada(validaError, null);
-            if(!esValida) return retrollamada(new Error("Token expirado."), null);
+        // Si la sesión es válida, usar el nombre de usuario para obtener un usuario
+        proxy.findOne({username: sesion.username}, function(findError, usuario){
+            if(findError) return retrollamada(findError, null);
             
-            // Si la sesión es válida, usar el nombre de usuario para obtener un usuario
-            proxy.findOne({username: sesion.username}, function(findError, usuario){
-                if(findError) return retrollamada(findError, null);
-                
-                // Retormar el arreglo de notas
-                retrollamada(null, usuario.notas);
+            // Retormar el arreglo de notas
+            retrollamada(null, usuario.notas);
+        });
+    });
+};
+
+// Modificar una nota utilizando la estructura recibida
+// la firma de la retrollamada es la siguiente:
+// function(error: Error, nota: estructuraNota)
+usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada){
+    // Verificar los datos requeridos
+    if(!token || !estructuraNota || !estructuraNota._id){
+        return retrollamada(new Error("No se recibieron todos los datos requeridos"), null);
+    };
+
+    let proxy = this;
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("No existe una sesión válida perteneciente al token recibido."), null);
+
+        proxy.findOne({username: sesion.username}, function(findError, usuario){
+            if(findError) return retrollamada(findError, null);
+            
+            // Encontrar el indice de la nota que tenga el mismo ID
+            let indice = usuario.notas.findIndex(function(elemento){
+                return elemento._id.toString() === estructuraNota._id;
+            });
+            if(indice < 0) return retrollamada(new Error("El _id no es válido"), null);
+            // Actualizando los datos
+            usuario.notas[indice].titulo =  estructuraNota.titulo;
+            usuario.notas[indice].contenido = estructuraNota.contenido;
+            usuario.notas[indice].esFija = estructuraNota.esFija;
+            usuario.notas[indice].ultimaEdicion = new Date();
+
+            // Guardando los nuevos datos en la BD
+            usuario.save(function(saveError, doc){
+                if(saveError) return retrollamada(saveError, null);
+                // Retornando el documento Nota
+                let nuevaNota = doc.notas[indice];
+                nuevaNota._id = nuevaNota._id.toString();
+                retrollamada(null, nuevaNota);
             });
         });
     });
