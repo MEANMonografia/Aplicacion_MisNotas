@@ -200,8 +200,13 @@ usuarioEsquema.statics.getNotas = function(token, retrollamada){
         proxy.findOne({username: sesion.username}, function(findError, usuario){
             if(findError) return retrollamada(findError, null);
             
+            // Modificar el _id para que sea una cadena en lugar de un objeto
+            let notasRetorno = usuario.notas.map(function(valor){
+                valor._id = valor._id.toString();
+                return valor;
+            });
             // Retormar el arreglo de notas
-            retrollamada(null, usuario.notas);
+            retrollamada(null, notasRetorno);
         });
     });
 };
