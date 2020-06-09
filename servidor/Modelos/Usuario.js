@@ -234,9 +234,9 @@ usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada
             });
             if(indice < 0) return retrollamada(new Error("El _id no es válido"), null);
             // Actualizando los datos
-            usuario.notas[indice].titulo =  estructuraNota.titulo;
-            usuario.notas[indice].contenido = estructuraNota.contenido;
-            usuario.notas[indice].esFija = estructuraNota.esFija;
+            usuario.notas[indice].titulo =  estructuraNota.titulo? estructuraNota.titulo: usuario.notas[indice].titulo;
+            usuario.notas[indice].contenido = estructuraNota.contenido? estructuraNota.contenido: usuario.notas[indice].contenido;
+            usuario.notas[indice].esFija = typeof(estructuraNota.esFija) == "boolean" ? estructuraNota.esFija: usuario.notas[indice].esFija;
             usuario.notas[indice].ultimaEdicion = new Date();
 
             // Guardando los nuevos datos en la BD
@@ -249,6 +249,13 @@ usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada
             });
         });
     });
+};
+
+// Eliminar un grupo de notas utilizando el _id para identificarlas
+// la firma de la retrollamada es la siguiente:
+// function(error: Error, eliminados: Number)
+usuarioEsquema.statics.eliminarLote = function(token,ids, retrollamada){
+
 };
 
 module.exports = mongoose.model('Usuario', usuarioEsquema);
