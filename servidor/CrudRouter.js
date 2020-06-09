@@ -52,13 +52,19 @@ router.post('/modificar', function(req, res, next){
 // Formato esperado de la peticion:
 // { token: String, ids: [_id: String]}
 // Formato de la respuesta:
-// { error: String, eliminados: Number}
+// { error: String, eliminados: Number|null}
 router.post('/eliminar', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-
+    Usuario.eliminarLote(req.body.token, req.body.ids, function(eliminarError, numeroEliminados){
+        res.json({
+            error: eliminarError? eliminarError.message: null,
+            eliminados: numeroEliminados
+        });
+        res.end();
+    });
 });
 
 // Formato esperado de la peticion:

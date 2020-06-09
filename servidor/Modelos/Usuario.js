@@ -234,9 +234,9 @@ usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada
             });
             if(indice < 0) return retrollamada(new Error("El _id no es válido"), null);
             // Actualizando los datos
-            usuario.notas[indice].titulo =  estructuraNota.titulo;
-            usuario.notas[indice].contenido = estructuraNota.contenido;
-            usuario.notas[indice].esFija = estructuraNota.esFija;
+            usuario.notas[indice].titulo =  estructuraNota.titulo? estructuraNota.titulo: usuario.notas[indice].titulo;
+            usuario.notas[indice].contenido = estructuraNota.contenido? estructuraNota.contenido: usuario.notas[indice].contenido;
+            usuario.notas[indice].esFija = typeof(estructuraNota.esFija) == "boolean" ? estructuraNota.esFija: usuario.notas[indice].esFija;
             usuario.notas[indice].ultimaEdicion = new Date();
 
             // Guardando los nuevos datos en la BD
@@ -246,6 +246,49 @@ usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada
                 let nuevaNota = doc.notas[indice];
                 nuevaNota._id = nuevaNota._id.toString();
                 retrollamada(null, nuevaNota);
+            });
+        });
+    });
+};
+
+// Eliminar un grupo de notas utilizando el _id para identificarlas
+// la firma de la retrollamada es la siguiente:
+// function(error: Error, eliminados: Number)
+usuarioEsquema.statics.eliminarLote = function(token,ids, retrollamada){
+    if(!token, !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
+
+    let proxy = this;
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("Token inválido o expirado"), null);
+
+        // Si se recibe un arreglo de ids vacío, retornar 0 eliminaciones en lugar de hacer la consulta
+        try{
+            if(ids.length == 0) return retrollamada(null, 0);
+        } catch(exception){
+            // Si lo anterior no se pudo verificar es porque se recibio el parametro ids, pero no es un arreglo
+            return retrollamada(exception, null);
+        }
+
+        proxy.findOne({username: sesion.username}, function(mongoError, usuario){
+            if(mongoError) return retrollamada(mongoError, null);
+            
+            // Realizar una copia de las notas en la BD
+            let notasVainilla = usuario.notas;
+            // Remover las notas cuyo _id este contenido en el arreglo ids y guardar el nuevo arreglo
+            let notasFiltradas = notasVainilla.filter(function(valor){
+                return ids.indexOf(valor._id.toString()) < 0;
+            });
+
+            // Establecer el arreglo con las notas que quedan en el objeto del usuario
+            usuario.notas = notasFiltradas;
+
+            // Insertar el nuevo objeto de usuario con la lista de notas actualizada en la BD
+            usuario.save(function(saveError, doc){
+                if(saveError) return retrollamada(saveError, null);
+
+                // Retornar la cantidad de notas eliminadas (la diferencia entre el arreglo original y el resultante)
+                retrollamada(null, notasVainilla.length - notasFiltradas.length);
             });
         });
     });
