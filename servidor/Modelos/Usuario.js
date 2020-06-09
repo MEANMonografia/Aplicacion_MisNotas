@@ -315,19 +315,24 @@ usuarioEsquema.statics.setFijas = function(token, ids, retrollamada){
         proxy.findOne({username: sesion.username}, function(mongoError, usuario){
             if(mongoError) return retrollamada(mongoError, null);
 
+            // Poniendo las notas de la lista como esFija = true, y todas las demás como esFija = false
             let notasActualizadas = usuario.notas.map(function(valor){
                 if(ids.indexOf(valor._id.toString()) > -1) valor.esFija = true;
                 else valor.esFija = false;
                 return valor;
             });
+
+            // Obteniendo una lista que contenga solo las notas fijas
             let notasFijas = notasActualizadas.filter(function(valor){
                 return valor.esFija;
             });
 
+            // Actualizando la lista de notas en el usuario y luego insertando los nuevos datos
             usuario.notas = notasActualizadas;
             usuario.save(function(saveError, doc){
                 if(saveError) return retrollamada(saveError, null);
 
+                // Retornando las notas que fueron fijadas
                 retrollamada(null, notasFijas);
             });
         });

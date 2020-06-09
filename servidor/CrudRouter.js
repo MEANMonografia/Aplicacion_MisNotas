@@ -94,7 +94,13 @@ router.post('/setnotasfijas', function(req, res, next){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-    
+    Usuario.setFijas(req.body.token, req.body.ids, function(error, notasFijas){
+        res.json({
+            error: error? error.message: null,
+            fijadas: notasFijas
+        });
+        res.end();
+    });
 });
 
 module.exports = router;
