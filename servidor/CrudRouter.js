@@ -88,7 +88,7 @@ router.post('/getnotas', function(req, res, next){
 // Formato esperado de la peticion:
 // { token: String, ids: [_id: String] }
 // Formato de la respuesta:
-// { error: String, fijadas: Number}
+// { error: String, fijadas: [estructuraNota]}
 router.post('/setnotasfijas', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);

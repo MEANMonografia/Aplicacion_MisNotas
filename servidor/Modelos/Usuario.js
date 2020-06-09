@@ -294,4 +294,44 @@ usuarioEsquema.statics.eliminarLote = function(token,ids, retrollamada){
     });
 };
 
+// Actualizar un grupo de notas como fijas usando el _id para identificarlas
+// ACLARACIÓN: Todas las notas no incluidas en el arreglo de ids van a tener su propiedad esFija = false
+// la firma de la retrollamada es la siguiente:
+// function(error: Error, notasFijas: [estructuraNota])
+usuarioEsquema.statics.setFijas = function(token, ids, retrollamada){
+    if(!token, !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
+
+    let proxy = this;
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("Token inválido o expirado"), null);
+
+        try{
+            if(ids.length == 0) return retrollamada(null, 0);
+        } catch(exception){
+            return retrollamada(exception, null);
+        }
+
+        proxy.findOne({username: sesion.username}, function(mongoError, usuario){
+            if(mongoError) return retrollamada(mongoError, null);
+
+            let notasActualizadas = usuario.notas.map(function(valor){
+                if(ids.indexOf(valor._id.toString()) > -1) valor.esFija = true;
+                else valor.esFija = false;
+                return valor;
+            });
+            let notasFijas = notasActualizadas.filter(function(valor){
+                return valor.esFija;
+            });
+
+            usuario.notas = notasActualizadas;
+            usuario.save(function(saveError, doc){
+                if(saveError) return retrollamada(saveError, null);
+
+                retrollamada(null, notasFijas);
+            });
+        });
+    });
+};
+
 module.exports = mongoose.model('Usuario', usuarioEsquema);
