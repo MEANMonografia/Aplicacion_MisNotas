@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MainModule">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/estilos.css">
+    <title>Login - Mis Notas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <script src="./javascript/main.js"></script>
+    <script src="./javascript/controladorIndex.js"></script>
+    <script src="./javascript/inicializacionLogin.js"></script>
 </head>
-<body>
-    <p id="temporal">Hola mundo!</p>
+<body ng-controller="controladorIndex as indexC">
+    <div class="bg-image"></div>
+    <div class="wrapper">
+        <div id="formContent">
+            <form>
+                <div>
+                    <img src="./resources/mis_notas2.png" id="icon" alt="Mis Notas logo"/>
+                </div>
+                <input type="text" ng-model="indexC.txtUsername" name="login" placeholder="Nombre de Usuario">
+                <input type="text" ng-model="indexC.txtPassword" name="login" placeholder="Contraseña">
+                <p ng-bind="indexC.mensajeError"></p>
+                <button ng-click="indexC.login($event)">Ingresar</button>
+            </form>
+            <div id="formFooter">
+                <span>¿Eres nuevo usuario?</span> <a href="#">¡Registrate acá!</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
