@@ -7,10 +7,10 @@ body {
 }
 
 a, a:visited {
-    color: #0056b3;
+    color: #0056b3 !important;
     display:inline-block;
-    text-decoration: none;
     font-weight: 400;
+    cursor: pointer;
 }
 
 h2 {
@@ -42,26 +42,25 @@ h2 {
 }
 
 .bg-image{
-    background: url("../resources/gris.jpg");
-    
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url("../resources/gris.jpg");
+    min-width: 900px;
+    min-height: 900px;
+    max-height: 1080px;
+    background-size: 100%;
+    background-repeat: repeat-y;
 }
 
 form{
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 15%;
+    padding-bottom: 15%;
 }
 
 #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
+    width: 100%;
+    max-width: 26em;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 2px 25px 24px -6px rgba(0,0,0,0.62);
@@ -76,17 +75,6 @@ form{
     text-align: center;
     -webkit-border-radius: 0 0 10px 10px;
     border-radius: 0 0 10px 10px;
-}
-
-/* TABS */
-
-h2.inactive {
-    color: #cccccc;
-}
-
-h2.active {
-    color: #0d0d0d;
-    border-bottom: 2px solid #5fbae9;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -113,6 +101,8 @@ input[type=button], input[type=submit], input[type=reset]  {
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
+
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
     background-color: #0066FF;
@@ -154,7 +144,7 @@ input[type=text]:focus {
 }
 
 input[type=text]:placeholder {
-    color: #cccc    cc;
+    color: #cccccc;
 }
 
 /* OTHERS */
@@ -168,3 +158,5 @@ input[type=text]:placeholder {
     margin-top: 50px;
     margin-bottom: 70px;
 }
+
+/* RESPONSIVE */
