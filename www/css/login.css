@@ -42,7 +42,7 @@ h2 {
 }
 
 .bg-image{
-    background-image: url("../resources/gris.jpg");
+    background-image: url("../recursos/gris.jpg");
     min-width: 900px;
     min-height: 900px;
     max-height: 1080px;
