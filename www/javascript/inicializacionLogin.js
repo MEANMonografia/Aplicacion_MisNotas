@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    // Lo
     let almacenamientoLocal = localStorage;
     let almacenamientoTemporal = sessionStorage;
     let token = almacenamientoLocal.getItem("valor");
@@ -31,3 +32,4 @@ $(document).ready(function() {
         });
     }
 });
+

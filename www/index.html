@@ -22,13 +22,15 @@
                 <div>
                     <img src="./resources/mis_notas2.png" id="icon" alt="Mis Notas logo"/>
                 </div>
-                <input type="text" ng-model="indexC.txtUsername" name="login" placeholder="Nombre de Usuario">
-                <input type="password" ng-model="indexC.txtPassword" name="login" placeholder="Contraseña">
+                <input type="text" ng-model="indexC.txtName" ng-show="indexC.controlSwitch" placeholder="Nombre">
+                <input type="text" ng-model="indexC.txtUsername"  placeholder="Nombre de Usuario">
+                <input type="text" ng-model="indexC.txtPassword" placeholder="Contraseña">
+                <input type="text" ng-model="indexC.txtConfirmPassword" ng-show="indexC.controlSwitch" placeholder="Confirmar Contraseña">
                 <p ng-bind="indexC.mensajeError"></p>
-                <button ng-click="indexC.login($event)" class="btn boton-principal">Ingresar</button>
+                <input type="submit" value="{{indexC.btnPrincipal}}" ng-click="indexC.login($event)"></input>
             </form>
             <div id="formFooter">
-                <span>¿Eres nuevo usuario?</span> <a href="#">¡Registrate acá!</a>
+                <span ng-bind="indexC.mensajeFooter"></span> <a ng-click="indexC.ngMostrarRegistro()" class="lelink" id="changeLink">¡Pulsa acá!</a> 
             </div>
         </div>
     </div>
