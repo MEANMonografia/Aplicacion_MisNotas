@@ -9,6 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <link rel="stylesheet" href="./css/estiloModal.css">
     <script src="./javascript/main.js"></script>
     <script src="./javascript/controladorIndex.js"></script>
     <script src="./javascript/inicializacionLogin.js"></script>
@@ -22,9 +23,9 @@
                     <img src="./resources/mis_notas2.png" id="icon" alt="Mis Notas logo"/>
                 </div>
                 <input type="text" ng-model="indexC.txtUsername" name="login" placeholder="Nombre de Usuario">
-                <input type="text" ng-model="indexC.txtPassword" name="login" placeholder="Contraseña">
+                <input type="password" ng-model="indexC.txtPassword" name="login" placeholder="Contraseña">
                 <p ng-bind="indexC.mensajeError"></p>
-                <button ng-click="indexC.login($event)">Ingresar</button>
+                <button ng-click="indexC.login($event)" class="btn boton-principal">Ingresar</button>
             </form>
             <div id="formFooter">
                 <span>¿Eres nuevo usuario?</span> <a href="#">¡Registrate acá!</a>

@@ -1,0 +1,81 @@
+#contenedor-principal{
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    filter: blur(3px);
+}
+
+.modal-caja-body{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    padding: 10px;
+}
+
+.modal-caja-externa{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    width: 65%;
+    min-width: 18em;
+    max-width: 38em;
+    height: 70%;
+    min-height: 21em;
+    max-height: 25em;
+    background-color: #93B7BE;
+    margin: auto;
+    padding: 3px;
+    overflow: visible;
+    border-radius: 20px;
+    box-shadow: 2px 25px 24px -6px rgba(0,0,0,0.62);
+    animation-name: entradaModal;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+#nota-cuerpo{
+    min-height: 5em;
+    height: 30vh;
+    max-height: 10em;
+    resize: none;
+}
+.modal-titulo{
+    color: #594157;
+    font-weight: 800;
+    text-shadow: 1px 1px 1px #F0FFFF;
+}
+
+.btn.boton-principal{
+    color: #F0FFFF;
+    font-weight: bold;
+    background-color: #0066FF;
+}
+
+.btn.boton-principal:hover{
+    color: #031926;
+}
+
+.btn.boton-peligro{
+    background-color: #F55D3E;
+    color: #F0FFFF;
+    font-weight: bold;
+}
+
+.btn.boton-peligro:hover{
+    color: #031926;
+}
+
+@keyframes entradaModal{
+    0%{
+        transform: scale(0.01, 0.01);
+    }
+
+    100%{
+        transform: scale(1,1);
+    }
+}
