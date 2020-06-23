@@ -24,10 +24,10 @@
                 </div>
                 <input type="text" ng-model="indexC.txtName" ng-show="indexC.controlSwitch" placeholder="Nombre">
                 <input type="text" ng-model="indexC.txtUsername"  placeholder="Nombre de Usuario">
-                <input type="text" ng-model="indexC.txtPassword" placeholder="Contraseña">
+                <input type="password" ng-model="indexC.txtPassword" placeholder="Contraseña">
                 <input type="text" ng-model="indexC.txtConfirmPassword" ng-show="indexC.controlSwitch" placeholder="Confirmar Contraseña">
                 <p ng-bind="indexC.mensajeError"></p>
-                <input type="submit" value="{{indexC.btnPrincipal}}" ng-click="indexC.login($event)"></input>
+                <input type="submit" value="{{indexC.btnPrincipal}}" ng-click="indexC.login($event)" class="btn boton-principal"></input>
             </form>
             <div id="formFooter">
                 <span ng-bind="indexC.mensajeFooter"></span> <a ng-click="indexC.ngMostrarRegistro()" class="lelink" id="changeLink">¡Pulsa acá!</a> 
