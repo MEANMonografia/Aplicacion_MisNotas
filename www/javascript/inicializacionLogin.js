@@ -12,7 +12,7 @@
             },
             body: cuerpo
         };
-        fetch("http://localhost:3000/api/crud/getnotas", opcionesFetch).then(function(response){
+        fetch("/api/crud/getnotas", opcionesFetch).then(function(response){
             return response.text();
         }).then(function(valor){
             let respuesta = JSON.parse(valor);
