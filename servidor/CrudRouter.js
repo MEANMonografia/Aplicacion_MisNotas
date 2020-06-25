@@ -130,13 +130,13 @@ router.post('/getidentidad', function(req, res, next){
         res.json(NO_DATA_ERROR);
         return res.end();
     }
-
-    // REEMPLAZAR ESTO -----------
-    res.json({
-        error: '',
-        temp: true
+    Usuario.identificarUsuario(req.body.token, function(error, usuario){
+        res.json({
+            error: error? error.message: null,
+            usuario: usuario
+        });
+        res.end();
     });
-    res.end();
 });
 
 module.exports = router;
