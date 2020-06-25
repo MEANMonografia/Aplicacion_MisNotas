@@ -9,7 +9,12 @@ const NO_DATA_ERROR = require('../Globales').NO_DATA_ERROR;
 // { 
 //   error: String, 
 //   estructuraNota: {
-//     _id: String, titulo: String, contenido: String, fechaCreacion: Date, ultimaEdicion: String, esFija: Boolean
+//     _id: String, 
+//     titulo: String, 
+//     contenido: String, 
+//     fechaCreacion: Date, 
+//     ultimaEdicion: String, 
+//     esFija: Boolean
 //   }
 // }
 router.post('/crear', function(req, res, next){
@@ -32,7 +37,12 @@ router.post('/crear', function(req, res, next){
 // { 
 //   error: String, 
 //   estructuraNota: {
-//     _id: String, titulo: String, contenido: String, fechaCreacion: Date, ultimaEdicion: String, esFija: Boolean
+//     _id: String, 
+//     titulo: String, 
+//     contenido: String, 
+//     fechaCreacion: Date, 
+//     ultimaEdicion: String, 
+//     esFija: Boolean
 //   }
 // }
 router.post('/modificar', function(req, res, next){
@@ -103,6 +113,18 @@ router.post('/setnotasfijas', function(req, res, next){
     });
 });
 
+// Formato esperado de la peticion:
+// { token: String }
+// Formato de la respuesta:
+// {
+//     error: String,
+//     usuario: {
+//         _id: String,
+//         username: String,
+//         primerNombre: String,
+//         primerApellido: String
+//     }
+// }
 router.post('/getidentidad', function(req, res, next){
     if(!req.body){
         res.json(NO_DATA_ERROR);
