@@ -21,9 +21,10 @@
             let respuesta = JSON.parse(respuestaTexto);
             if(respuesta.error){
                 localStorage.removeItem("notasToken");
+                sessionStorage.removeItem("notas");
                 return window.location.assign('/');
             }
-            sessionStorage.setItem("notas", respuesta.notas);
+            sessionStorage.setItem("notas", JSON.stringify(respuesta.notas));
         }).catch(function(error){
             console.error(error);
         });

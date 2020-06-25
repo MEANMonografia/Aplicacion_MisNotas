@@ -73,5 +73,5 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', function(servicioPrincipal){
     let proxy = this;
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
-    
+
 }]);
