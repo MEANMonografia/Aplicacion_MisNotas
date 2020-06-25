@@ -255,7 +255,7 @@ usuarioEsquema.statics.actualizar = function(token, estructuraNota, retrollamada
 // la firma de la retrollamada es la siguiente:
 // function(error: Error, eliminados: Number)
 usuarioEsquema.statics.eliminarLote = function(token,ids, retrollamada){
-    if(!token, !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
+    if(!token || !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
 
     let proxy = this;
     SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
@@ -299,7 +299,7 @@ usuarioEsquema.statics.eliminarLote = function(token,ids, retrollamada){
 // la firma de la retrollamada es la siguiente:
 // function(error: Error, notasFijas: [estructuraNota])
 usuarioEsquema.statics.setFijas = function(token, ids, retrollamada){
-    if(!token, !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
+    if(!token || !ids) return retrollamada(new Error("No se recibieron los datos requeridos"), null);
 
     let proxy = this;
     SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
@@ -334,6 +334,31 @@ usuarioEsquema.statics.setFijas = function(token, ids, retrollamada){
 
                 // Retornando las notas que fueron fijadas
                 retrollamada(null, notasFijas);
+            });
+        });
+    });
+};
+
+// Utilizar un token para identificar a un usuario
+// la firma de la retrollamada es la siguiente:
+// function(error: Error, usuario: { _id: String, username: String, primerNombre: String, primerApellido: String })
+usuarioEsquema.statics.identificarUsuario = function(token, retrollamada){
+    if(!token) return retrollamada(new Error("No se recibió un token"), null);
+    let proxy = this;
+
+    SesionModelo.encontrarPorToken(token, function(encontrarError, sesion){
+        if(encontrarError) return retrollamada(encontrarError, null);
+        if(!sesion) return retrollamada(new Error("Token inválido o expirado"), null);
+
+        proxy.findOne({ username: sesion.username}, function(mongoError, usuario){
+            if(mongoError) return retrollamada(mongoError, null);
+            if(!usuario) return retrollamada(new Error("Existe una sesion, pero no un usuario válido"), null);
+
+            retrollamada(null, {
+                _id: usuario._id.toString(), 
+                username: usuario.username,
+                primerNombre: usuario.primerNombre,
+                primerApellido: usuario.primerApellido? usuario.primerApellido : null
             });
         });
     });

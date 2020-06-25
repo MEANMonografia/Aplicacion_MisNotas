@@ -60,6 +60,10 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
                 ids: idsNotas
             };
             this.enviarPeticion('/api/crud/setnotasfijas', cuerpo, retrollamada);
+        },
+        getIdentidad: function(retrollamada){
+            let cuerpo = { token: token };
+            this.enviarPeticion('/api/crud/getidentidad', cuerpo, retrollamada);
         }
     };
     return servicioPrincipal;
@@ -69,5 +73,5 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', function(servicioPrincipal){
     let proxy = this;
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
-    console.log(proxy.notas);
+    
 }]);
