@@ -24,7 +24,7 @@
             }
             console.log(respuesta.notas);
             sessionStorage.setItem("notas", respuesta.notas);
-            console.log("Aca redirigimos si entra a Login y tiene sesion activa");
+            window.location.replace('/principal');
         })
         .catch(function (error) {
             console.error(error);

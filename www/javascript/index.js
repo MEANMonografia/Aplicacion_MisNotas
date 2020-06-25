@@ -35,7 +35,7 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
                         return $scope.$apply();
                     }
                     localStorage.setItem("notasToken", respuesta.token);
-                    console.log("Aca redireccionamos con el token");
+                    window.location.assign('/principal');
                 })
                 .catch(function (error) {
                     console.error(error);
