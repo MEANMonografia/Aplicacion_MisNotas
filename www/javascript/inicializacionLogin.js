@@ -1,4 +1,4 @@
-$(document).ready(function() {
+(function() {
     // Lo
     let almacenamientoLocal = localStorage;
     let almacenamientoTemporal = sessionStorage;
@@ -31,5 +31,5 @@ $(document).ready(function() {
             console.error(error);
         });
     }
-});
+})();
 
