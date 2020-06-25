@@ -12,11 +12,9 @@
             },
             body: cuerpo
         };
-        fetch("http://localhost:3000/api/crud/getnotas", opcionesFetch)
-        .then(function (response) {
+        fetch("http://localhost:3000/api/crud/getnotas", opcionesFetch).then(function(response){
             return response.text();
-        })
-        .then(function (valor) {
+        }).then(function(valor){
             let respuesta = JSON.parse(valor);
             if (respuesta.error){ 
                 localStorage.removeItem("notasToken");
@@ -25,8 +23,7 @@
             console.log(respuesta.notas);
             sessionStorage.setItem("notas", respuesta.notas);
             window.location.replace('/principal');
-        })
-        .catch(function (error) {
+        }).catch(function(error){
             console.error(error);
         });
     }
