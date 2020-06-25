@@ -11,8 +11,16 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
     controladorIndex.mensajeFooter = mensajeTextoFooterRegistro;
     controladorIndex.login = function (event) {
         event.preventDefault();
+        if(!controladorIndex.txtUsername){
+            controladorIndex.mensajeError = "El campo 'Nombre de Usuario' es requerido";
+            return;
+        }
+        if(!controladorIndex.txtPassword){
+            controladorIndex.mensajeError = "El campo 'Contraseña' es requerido";
+            return;
+        }
+        controladorIndex.mensajeError = "";
         if (!controladorIndex.controlSwitch) {
-            controladorIndex.mensajeError = "";
             let cuerpo = JSON.stringify({
                 username: controladorIndex.txtUsername,
                 pass: controladorIndex.txtPassword
@@ -42,11 +50,23 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
                 });
         }
         else{
-            controladorIndex.mensajeError = "";
+            if(!controladorIndex.txtNombre){
+                controladorIndex.mensajeError = "El campo 'Nombre' es requerido";
+                return;
+            }
+            if(!controladorIndex.txtConfirmPassword){
+                controladorIndex.mensajeError = "El campo 'Confirmar Contraseña' es requerido";
+                return;
+            }
+            if(controladorIndex.txtPassword !== controladorIndex.txtConfirmPassword){
+                controladorIndex.mensajeError = "El campo 'Confirmar Contraseña' no coincide con 'Contraseña'";
+                return;
+            }
             let cuerpoRegistrar = JSON.stringify({
                 username: controladorIndex.txtUsername,
                 pass: controladorIndex.txtPassword,
-                primerNombre: controladorIndex.txtName
+                primerNombre: controladorIndex.txtNombre,
+                primerApellido: controladorIndex.txtApellido? controladorIndex.txtApellido: null
             });
             let opcionesFetchRegistrar = {
                 method: "POST",
@@ -61,13 +81,12 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
                 })
                 .then(function (valor) {
                     let respuesta = JSON.parse(valor);
-                    console.log(respuesta)
                     if (!respuesta.token) {
                         controladorIndex.mensajeError = respuesta.error;
                         return $scope.$apply();
                     }
                     localStorage.setItem("notasToken", respuesta.token);
-                    console.log("Aca redireccionamos con el token recibido de regreso");
+                    window.location.assign('/principal');
                 })
                 .catch(function (error) {
                     console.error(error);
