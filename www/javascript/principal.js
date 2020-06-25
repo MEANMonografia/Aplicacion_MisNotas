@@ -62,7 +62,7 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
             this.enviarPeticion('/api/crud/setnotasfijas', cuerpo, retrollamada);
         },
         getIdentidad: function(retrollamada){
-            let cuerpo = { token: token };
+            let cuerpo = { token: this.token };
             this.enviarPeticion('/api/crud/getidentidad', cuerpo, retrollamada);
         }
     };
@@ -70,8 +70,14 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 }]);
 
 // ------------------------------ CONTROLADOR ------------------------------------
-ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', function(servicioPrincipal){
+ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope', function(servicioPrincipal, $scope){
     let proxy = this;
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
-
+    servicioPrincipal.getIdentidad(function(respuesta){
+        proxy.datosUsuario = respuesta.usuario;
+        console.log(proxy.datosUsuario);
+        proxy.nombreUsuario = respuesta.usuario.primerNombre + 
+          (respuesta.usuario.primerApellido? ' ' + respuesta.usuario.primerApellido: '');
+        $scope.$apply();
+    });
 }]);
