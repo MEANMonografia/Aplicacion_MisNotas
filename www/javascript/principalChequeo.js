@@ -1,5 +1,5 @@
 (function(){
-    let token = localStorage.getItem("valor");
+    let token = localStorage.getItem("notasToken");
     let notas = sessionStorage.getItem("notas");
     if(token){
         if(!notas){
