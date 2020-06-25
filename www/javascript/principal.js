@@ -1,4 +1,4 @@
-const ModuloPrincipal = angular.module("ModuloPrincipal");
+const ModuloPrincipal = angular.module("ModuloPrincipal", []);
 
 // ------------------------------ SERVICIO ------------------------------------
 ModuloPrincipal.factory("ServicioPrincipal", [function(){
@@ -68,5 +68,6 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 // ------------------------------ CONTROLADOR ------------------------------------
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', function(servicioPrincipal){
     let proxy = this;
-    proxy.notas = sessionStorage.getItem('notas');
+    proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
+    console.log(proxy.notas);
 }]);

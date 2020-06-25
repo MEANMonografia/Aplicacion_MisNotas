@@ -103,4 +103,18 @@ router.post('/setnotasfijas', function(req, res, next){
     });
 });
 
+router.post('/getidentidad', function(req, res, next){
+    if(!req.body){
+        res.json(NO_DATA_ERROR);
+        return res.end();
+    }
+
+    // REEMPLAZAR ESTO -----------
+    res.json({
+        error: '',
+        temp: true
+    });
+    res.end();
+});
+
 module.exports = router;
