@@ -1,9 +1,15 @@
 
 /* BASIC */
 
-body {
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body, html{
     font-family: sans-serif;
-    height: 100vh;
+    height: 100%;
 }
 
 a, a:visited {
@@ -13,63 +19,51 @@ a, a:visited {
     cursor: pointer;
 }
 
-h2 {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    display:inline-block;
-    margin: 40px 8px 10px 8px; 
-    color: #cccccc;
-}
-
 /* STRUCTURE */
 
-/* Chequear altura de la caja principal */
 
-.wrapper {
+/* Alineacion del texto del boton
+Padding del div es demasiado en ciertas resoluciones
+centrado del icono 
+color de error en rojo
+*/
+
+.formWrapper {
+    margin: 0 auto;
+    width: 100%;
+}
+
+
+.loginContainer{
+    width: 100%;  
+    min-height: 100vh;
     display: flex;
-    align-items: center;
-    flex-direction: column; 
+    flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
-    min-height: 100%;
-    padding: 20px;
-    left: 0;
-    top: 0;
-    z-index: 200;
-    position: absolute;
+    align-items: center;
+    padding: 1.1em;
+    background: #93b7be;
+    box-shadow: inset 0px -45px 40px -27px rgba(0,0,0,0.75);  
 }
 
-.bg-image{
-    background-image: url("../recursos/gris.jpg");
-    min-width: 900px;
-    min-height: 900px;
-    max-height: 1080px;
-    background-size: 100%;
-    background-repeat: repeat-y;
-}
-
-form{
-    padding-top: 15%;
-    padding-bottom: 15%;
-}
-
-#formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
+.loginWrapper{
+    width: 390px;
     background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 1.8em 1.8em 1.2em 1.8em;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.loginForm{
     width: 100%;
-    max-width: 26em;
-    position: relative;
-    padding: 0px;
-    -webkit-box-shadow: 2px 25px 24px -6px rgba(0,0,0,0.62);
-    box-shadow: 2px 25px 24px -6px rgba(0,0,0,0.62);
-    text-align: center;
 }
 
 #formFooter {
-    background-color: #f6f6f6;
     border-top: 1px solid #dce8f1;
     padding: 25px;
     text-align: center;
@@ -83,18 +77,19 @@ input[type=button], input[type=submit], input[type=reset]  {
     background-color: #0066AA;
     border: none;
     color: white;
-    padding: 15px 80px;
+    padding: 0.8em;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     text-transform: uppercase;
     font-size: 13px;
-    width: 85%;
+    width: 100%;
     -webkit-box-shadow: 0 10px 20px 0 rgba(95,186,233,0.4);
     box-shadow: 0 10px 20px 0 rgba(95,186,233,0.4);
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
-    margin: 50px 20px 40px 20px;
+    margin-top: 3em;
+    margin-bottom: 3em;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
@@ -121,13 +116,13 @@ input[type=text], input[type=password] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
-    padding: 15px 32px;
+    padding: 1em 1.5em;
     text-align: start;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 5px;
-    width: 85%;
+    margin-top: 0.8em;
+    width: 100%;
     border: 2px solid #f6f6f6;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
@@ -138,12 +133,12 @@ input[type=text], input[type=password] {
     border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus, input[type=password]:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
 }
 
-input[type=text]:placeholder {
+input[type=text]:placeholder, input[type=password]:placeholder {
     color: #cccccc;
 }
 
@@ -153,10 +148,13 @@ input[type=text]:placeholder {
     outline: none;
 } 
 
-#icon {
-    width:75%;
-    margin-top: 50px;
-    margin-bottom: 70px;
+.icon {
+    text-align: center;
+    margin: 10%;
+}
+
+#imgLogo{
+    width: 90%;
 }
 
 /* RESPONSIVE */
