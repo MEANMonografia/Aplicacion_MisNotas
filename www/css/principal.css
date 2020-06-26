@@ -28,10 +28,26 @@ body{
         moveIn 0.3s forwards ease-out;
 }
 
+.nota-caja-cabecera{
+    width: 100%;
+}
+
+.nota-caja-pin{
+    display: block;
+    float: right;
+    height: 24px;
+    width: 24px;
+}
+
+.nota-caja-pin img{
+    width: 100%;
+}
+
 .nota-caja-titulo{
+    display: inline-block;
     text-align: center;
     border-bottom: solid 1px #031926;
-    font-size: 1.8em;
+    font-size: 1.5em;
     font-weight: bold;
     color: #031926;
     text-shadow: 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E;
@@ -43,7 +59,7 @@ body{
     /* background-color: #F0FFFF; */
     text-overflow: ellipsis;
     border-radius: 10px;
-    padding: 2px 2px 5px 10px;
+    padding: 2px 2px 5px 2px;
     min-height: 150px;
     max-height: 200px;
     overflow: hidden;
