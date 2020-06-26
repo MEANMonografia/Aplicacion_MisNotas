@@ -5,12 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MisNotas</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="./css/principal.css">
+    <link rel="stylesheet" href="./css/estiloModal.css">
     <script src="./javascript/principalChequeo.js"></script>
 </head>
 <body ng-controller="ControladorPrincipal as ctrl">
+    <div class="container-fluid">
+        <div class="row barra-caja-externa">
+            <div class="col-md-6">
+                <img src="./recursos/mis_notas2.png" alt="logo" class="barra-icono">
+            </div>
+            <div class="col-md-6 text-sm-center text-md-right">
+                <span ng-bind="ctrl.nombreUsuario" class="barra-caja-usuario"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 align-middle text-center">
+                <button class="btn boton-principal" ng-click="ctrl.crearNota()">+ Crear</button>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <div class="container-fluid">
+                <div class="nota-caja-exterior">
+                    <div class="nota-caja-titulo">Titulo provisional</div>
+                    <div class="nota-caja-contenido">
+                        contenido provisional lorem ipsum dolor sit amet uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciseis diecisiete dieciocho
+                        diecinueve veinte veintiuno veintidos veintitres veinticuatro veinticinco veintiseis veintisiete veintiocho veintinueve treinta treintaiuno
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <h1>En construcción</h1>
     <p id="tempToken"></p>
-    <p ng-bind="ctrl.nombreUsuario"></p>
     <script src="./javascript/principal.js"></script>
 </body>
 </html>

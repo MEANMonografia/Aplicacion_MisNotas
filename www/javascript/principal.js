@@ -73,6 +73,9 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope', function(servicioPrincipal, $scope){
     let proxy = this;
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
+    proxy.crearNota = function(){
+        console.log("+Crear presionado");
+    };
     servicioPrincipal.getIdentidad(function(respuesta){
         proxy.datosUsuario = respuesta.usuario;
         console.log(proxy.datosUsuario);
