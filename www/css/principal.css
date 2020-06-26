@@ -11,6 +11,37 @@ body{
     height: 60px;
 }
 
+.nota-caja-exterior{
+    background-color: #93B7B9;
+    max-width: 300px;
+    width: 20em;
+    min-width: 250px;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    padding-top: 0.8em;
+    padding-bottom: 3em;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.nota-caja-titulo{
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #031926;
+    text-shadow: 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E, 1px 1px 2px #F55D3E;
+    margin-bottom: 5px;
+}
+
+.nota-caja-contenido{
+    color: #031926;
+    background-color: #F0FFFF;
+    border-radius: 10px;
+    padding: 2px 2px 5px 10px;
+    min-height: 150px;
+    max-height: 200px;
+    overflow: hidden;
+}
 
 .barra-caja-usuario{
     color: #93B7B9;
