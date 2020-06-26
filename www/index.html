@@ -11,23 +11,24 @@
     <script src="./javascript/inicializacionLogin.js"></script>
 </head>
 <body ng-controller="controladorIndex as indexC">
-    <div class="bg-image"></div>
-    <div class="wrapper">
-        <div id="formContent">
-            <form>
-                <div>
-                    <img src="./recursos/mis_notas2.png" id="icon" alt="Mis Notas logo"/>
+    <div class="limiter">
+        <div class="loginContainer">
+            <div class="loginWrapper">
+                <form class="loginForm">
+                    <div class="icon">
+                        <img id="imgLogo" src="./recursos/mis_notas2.png" alt="Mis Notas logo"/>
+                    </div>
+                    <input type="text" ng-model="indexC.txtNombre" ng-show="indexC.controlSwitch" placeholder="Nombre*">
+                    <input type="text" ng-model="indexC.txtApellido" ng-show="indexC.controlSwitch" placeholder="Apellido">
+                    <input type="text" ng-model="indexC.txtUsername"  placeholder="Nombre de Usuario*">
+                    <input type="password" ng-model="indexC.txtPassword" placeholder="Contraseña*">
+                    <input type="password" ng-model="indexC.txtConfirmPassword" ng-show="indexC.controlSwitch" placeholder="Confirmar Contraseña*">
+                    <p ng-bind="indexC.mensajeError"></p>
+                    <input type="submit" value="{{indexC.btnPrincipal}}" ng-click="indexC.login($event)" class="btn boton-principal"></input>
+                </form>
+                <div id="formFooter">
+                    <span ng-bind="indexC.mensajeFooter"></span> <a ng-click="indexC.ngMostrarRegistro()" class="lelink" id="changeLink">¡Pulsa acá!</a> 
                 </div>
-                <input type="text" ng-model="indexC.txtNombre" ng-show="indexC.controlSwitch" placeholder="Nombre*">
-                <input type="text" ng-model="indexC.txtApellido" ng-show="indexC.controlSwitch" placeholder="Apellido">
-                <input type="text" ng-model="indexC.txtUsername"  placeholder="Nombre de Usuario*">
-                <input type="password" ng-model="indexC.txtPassword" placeholder="Contraseña*">
-                <input type="password" ng-model="indexC.txtConfirmPassword" ng-show="indexC.controlSwitch" placeholder="Confirmar Contraseña*">
-                <p ng-bind="indexC.mensajeError"></p>
-                <input type="submit" value="{{indexC.btnPrincipal}}" ng-click="indexC.login($event)" class="btn boton-principal"></input>
-            </form>
-            <div id="formFooter">
-                <span ng-bind="indexC.mensajeFooter"></span> <a ng-click="indexC.ngMostrarRegistro()" class="lelink" id="changeLink">¡Pulsa acá!</a> 
             </div>
         </div>
     </div>
