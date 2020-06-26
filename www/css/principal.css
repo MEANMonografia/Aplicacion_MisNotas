@@ -20,12 +20,17 @@ body{
     padding-right: 0.8em;
     padding-top: 0.8em;
     padding-bottom: 3em;
-    margin: 5px;
+    margin: 5px auto;
     border-radius: 10px;
+    cursor: pointer;
+    animation: 
+        fadeIn 0.4s forwards ease-out,
+        moveIn 0.3s forwards ease-out;
 }
 
 .nota-caja-titulo{
     text-align: center;
+    border-bottom: solid 1px #031926;
     font-size: 1.8em;
     font-weight: bold;
     color: #031926;
@@ -35,7 +40,8 @@ body{
 
 .nota-caja-contenido{
     color: #031926;
-    background-color: #F0FFFF;
+    /* background-color: #F0FFFF; */
+    text-overflow: ellipsis;
     border-radius: 10px;
     padding: 2px 2px 5px 10px;
     min-height: 150px;
@@ -50,4 +56,32 @@ body{
     font-weight: bold;
     font-size: 2em;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes rotate{
+    from{
+        transform: rotate(45deg);
+    }
+
+    to{
+        transform: rotate(0);
+    }
+}
+
+@keyframes moveIn{
+    from{
+        transform: translateY(10px);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }
