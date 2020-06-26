@@ -1,6 +1,12 @@
 body{
     background-color: #F0FFFF;
 }
+
+#temp-token{
+    margin: 5px 0px 2px 10px;
+    font-style: italic;
+}
+
 .barra-caja-externa{
     border-bottom: 1px solid gray;
     box-shadow: 0px 1px 5px -1px rgba(0,0,0,0.62);

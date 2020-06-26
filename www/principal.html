@@ -29,25 +29,13 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="nota-caja-exterior">
-                    <div class="nota-caja-cabecera">
-                        <div class="nota-caja-titulo">Titulo provisional</div>
-                        <div class="nota-caja-pin" ng-show="true"><img src="./recursos/pin.png" alt="icono de pin"></div>
-                    </div>
-                    <div class="nota-caja-contenido">
-                        contenido provisional lorem ipsum dolor sit amet uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince dieciseis diecisiete dieciocho
-                        diecinueve veinte veintiuno veintidos veintitres veinticuatro veinticinco veintiseis veintisiete veintiocho veintinueve treinta treintaiuno
-                    </div>
-                </div>
+        <div class="row" ng-repeat="fila in ctrl.notasPorFilas">
+            <div class="col-md-3" ng-repeat="nota in fila">
+                <directiva-nota informacion="nota" />
             </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-3"></div>
         </div>
     </div>
-    <h1>En construcción</h1>
-    <p id="tempToken"></p>
+    <h2 id="temp-token" ng-show="ctrl.empty">Hey! Hay que <b>crear</b> algunas notas</h2>
     <script src="./javascript/principal.js"></script>
 </body>
 </html>

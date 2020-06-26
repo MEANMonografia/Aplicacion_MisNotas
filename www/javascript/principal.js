@@ -72,7 +72,34 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 // ------------------------------ CONTROLADOR ------------------------------------
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope', function(servicioPrincipal, $scope){
     let proxy = this;
+    const ordenarNotas = function(){
+        proxy.notas.sort(function(a, b){
+            if(a.esFija) return -1;
+            if(b.esFija) return 1;
+            return 0;
+        });
+    };
+    const trozear = function(){
+        let longitudTotal = proxy.notas.length;
+        let extra = longitudTotal % 4;
+        let filas = (longitudTotal-extra)/4;
+        let retorno = [];
+        for(let i = 0; i < filas; i++){
+            let actual = [];
+            for(let j = 0; j < 4; j++){
+                actual.push(proxy.notas[(i*4)+j]);
+            }
+            retorno.push(actual);
+        }
+        let datosExtra = [];
+        for(let j = 0; j < extra; j++) datosExtra.push(proxy.notas[proxy.notas.length - extra + j]);
+        retorno.push(datosExtra);
+        return retorno;
+    };
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
+    proxy.empty = proxy.notas.length < 1;
+    ordenarNotas();
+    proxy.notasPorFilas = trozear();
     proxy.crearNota = function(){
         console.log("+Crear presionado");
     };
@@ -83,4 +110,15 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
           (respuesta.usuario.primerApellido? ' ' + respuesta.usuario.primerApellido: '');
         $scope.$apply();
     });
+}]);
+
+// ------------------------------ DIRECTIVA ------------------------------------
+ModuloPrincipal.directive("directivaNota", [function(){
+    return {
+        restrict: 'E',
+        scope: {
+            datosNota: '=informacion'
+        },
+        templateUrl: './recursos/nota.html'
+    };
 }]);
