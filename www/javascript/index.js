@@ -32,7 +32,7 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
                 },
                 body: cuerpo
             };
-            fetch("http://localhost:3000/api/login", opcionesFetch)
+            fetch("/api/login", opcionesFetch)
                 .then(function (response) {
                     return response.text();
                 })
@@ -75,7 +75,7 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
                 },
                 body: cuerpoRegistrar
             };
-            fetch("http://localhost:3000/api/registrar", opcionesFetchRegistrar)
+            fetch("/api/registrar", opcionesFetchRegistrar)
                 .then(function (response) {
                     return response.text();
                 })
