@@ -72,6 +72,7 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 // ------------------------------ CONTROLADOR ------------------------------------
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope', function(servicioPrincipal, $scope){
     let proxy = this;
+    const estiloDifuminado = 'difuminar';
     const ordenarNotas = function(){
         proxy.notas.sort(function(a, b){
             if(a.esFija) return -1;
@@ -98,9 +99,11 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
     };
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
     proxy.empty = proxy.notas.length < 1;
+    proxy.estiloSegundoPlano = null;
     ordenarNotas();
     proxy.notasPorFilas = trozear();
     proxy.crearNota = function(){
+        proxy.estiloSegundoPlano = proxy.estiloSegundoPlano ? null : estiloDifuminado;
         console.log("+Crear presionado");
     };
     servicioPrincipal.getIdentidad(function(respuesta){
@@ -112,7 +115,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
     });
 }]);
 
-// ------------------------------ DIRECTIVA ------------------------------------
+// ------------------------------ DIRECTIVA NOTA ------------------------------------
 ModuloPrincipal.directive("directivaNota", [function(){
     return {
         restrict: 'E',
@@ -120,5 +123,16 @@ ModuloPrincipal.directive("directivaNota", [function(){
             datosNota: '=informacion'
         },
         templateUrl: './recursos/nota.html'
+    };
+}]);
+
+// ------------------------------ DIRECTIVA MODAL ------------------------------------
+ModuloPrincipal.directive("directivaModal", [function(){
+    return {
+        restrict: 'E',
+        scope: {
+            referenciaNota: '=informacion'
+        },
+        templateUrl: './recursos/modal.html'
     };
 }]);

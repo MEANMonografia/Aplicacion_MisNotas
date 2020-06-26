@@ -11,7 +11,7 @@
     <script src="./javascript/principalChequeo.js"></script>
 </head>
 <body ng-controller="ControladorPrincipal as ctrl">
-    <div class="container-fluid">
+    <div class="container-fluid" id="{{ctrl.estiloSegundoPlano}}">
         <div class="row barra-caja-externa">
             <div class="col-md-6">
                 <img src="./recursos/mis_notas2.png" alt="logo" class="barra-icono">
@@ -37,7 +37,13 @@
             </div>
         </div>
     </div>
-    <h2 id="temp-token" ng-show="ctrl.empty">Hey! Hay que <b>crear</b> algunas notas</h2>
+    <div class="row" ng-show="ctrl.empty">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <h2 id="temp-token">Hey! Hay que <b>crear</b> algunas notas</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
     <script src="./javascript/principal.js"></script>
 </body>
 </html>

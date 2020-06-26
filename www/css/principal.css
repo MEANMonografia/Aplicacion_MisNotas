@@ -1,6 +1,9 @@
 body{
     background-color: #F0FFFF;
 }
+#difuminar{
+    filter: blur(3px);
+}
 
 #temp-token{
     margin: 5px 0px 2px 10px;
