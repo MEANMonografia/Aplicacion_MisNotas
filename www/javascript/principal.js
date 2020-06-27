@@ -118,6 +118,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         proxy.notas.push(respuesta.estructuraNota);
                         ordenarNotas();
                         proxy.notasPorFilas = trozear();
+                        sessionStorage.setItem('notas', JSON.stringify(proxy.notas));
                         $scope.$apply();
                     });
                     break;
@@ -137,6 +138,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         proxy.notas.splice(i, 1, respuesta.estructuraNota);
                         ordenarNotas();
                         proxy.notasPorFilas = trozear();
+                        sessionStorage.setItem('notas', JSON.stringify(proxy.notas));
                         $scope.$apply();
                     });
                     break;
@@ -156,6 +158,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                 proxy.notas.splice(i, 1);
                 ordenarNotas();
                 proxy.notasPorFilas = trozear();
+                sessionStorage.setItem('notas', JSON.stringify(proxy.notas));
                 $scope.$apply();
             });
             cerrarModal();
@@ -187,7 +190,6 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
     const cerrarModal = function(){
         proxy.modalDatos = null;
         proxy.estiloSegundoPlano = null;
-        sessionStorage.setItem('notas', JSON.stringify(proxy.notas));
     };
     // Obtener el arreglo de notas de sessionStorage
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
