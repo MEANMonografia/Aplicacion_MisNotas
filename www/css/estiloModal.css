@@ -70,6 +70,10 @@
     color: #031926;
 }
 
+.modal-check{
+    float: right;
+}
+
 @keyframes entradaModal{
     0%{
         transform: scale(0.01, 0.01);

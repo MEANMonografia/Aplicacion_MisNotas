@@ -1,0 +1,41 @@
+<div class="modal-caja-body" ng-click="referenciaNota.clickExterno($event)">
+    <div class="modal-caja-externa" ng-click="referenciaNota.clickInterno($event)">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container-fluid text-center">
+                    <h3 class="modal-titulo">{{referenciaNota.textoTipo}}</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10 text-justify">
+                    <div class="form-group">
+                        <label for="nota-titulo">
+                            Título:
+                        </label>
+                        <input type="text" name="nota-titulo" id="nota-titulo" placeholder="Título" class="form-control" ng-model="referenciaNota.notaTitulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="nota-cuerpo">
+                            Contenido:
+                        </label>
+                        <textarea name="nota-cuerpo" id="nota-cuerpo" class="form-control" ng-model="referenciaNota.notaContenido"></textarea>
+                    </div>
+                    <button class="btn boton-principal" ng-click="referenciaNota.enviar($event)">
+                        Enviar
+                    </button>
+                    <button class="btn boton-peligro" ng-click="referenciaNota.cancelar($event)">
+                        Cancelar
+                    </button>
+                    <div class="form-check modal-check">
+                        <input type="checkbox" name="es-fija" id="es-fija" ng-model="referenciaNota.notaEsFija" class="form-check-input">
+                        <label for="es-fija" class="form-check-label">
+                            Es fija?
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+</div>

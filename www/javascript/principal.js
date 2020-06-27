@@ -72,43 +72,113 @@ ModuloPrincipal.factory("ServicioPrincipal", [function(){
 // ------------------------------ CONTROLADOR ------------------------------------
 ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope', function(servicioPrincipal, $scope){
     let proxy = this;
+    // Estilo para difuminar toda la aplicación al mostrar una caja modal
     const estiloDifuminado = 'difuminar';
+    // Ordena las notas para posicionar las notas fijas de primero (de la más reciente a la más antigua)
     const ordenarNotas = function(){
-        proxy.notas.sort(function(a, b){
+        proxy.empty = proxy.notas.length < 1;
+        proxy.notasOrdenadas.sort(function(a, b){
             if(a.esFija) return -1;
             if(b.esFija) return 1;
             return 0;
         });
     };
+
+    // Dividir las notas en filas para poder recorrerlas de una forma más intuitiva en la vista
     const trozear = function(){
-        let longitudTotal = proxy.notas.length;
+        let longitudTotal = proxy.notasOrdenadas.length;
         let extra = longitudTotal % 4;
         let filas = (longitudTotal-extra)/4;
         let retorno = [];
         for(let i = 0; i < filas; i++){
             let actual = [];
             for(let j = 0; j < 4; j++){
-                actual.push(proxy.notas[(i*4)+j]);
+                actual.push(proxy.notasOrdenadas[(i*4)+j]);
             }
             retorno.push(actual);
         }
         let datosExtra = [];
-        for(let j = 0; j < extra; j++) datosExtra.push(proxy.notas[proxy.notas.length - extra + j]);
+        for(let j = 0; j < extra; j++) datosExtra.push(proxy.notasOrdenadas[proxy.notasOrdenadas.length - extra + j]);
         retorno.push(datosExtra);
         return retorno;
     };
+
+    // ------------ funciones basicas para modales
+    const manejadorBase = {
+        hacerPeticion: function(){
+            switch(this.tipo){
+                case 'crear':
+                    servicioPrincipal.crearNota({
+                        titulo: proxy.modalDatos.notaTitulo,
+                        contenido: proxy.modalDatos.notaContenido,
+                        esFija: proxy.modalDatos.notaEsFija? true:false
+                    }, function(respuesta){
+                        proxy.notas.push(respuesta.estructuraNota);
+                        proxy.notasOrdenadas = proxy.notas;
+                        ordenarNotas();
+                        proxy.notasPorFilas = trozear();
+                        $scope.$apply();
+                    });
+                    break;
+                case 'modificar':
+                    servicioPrincipal.modificarNota({
+                        _id: proxy.modalDatos._id,
+                        titulo: proxy.modalDatos.notaTitulo,
+                        contenido: proxy.modalDatos.notaContenido,
+                        esFija: proxy.modalDatos.notaEsFija?true:false
+                    }, function(respuesta){
+                        proxy.notas.push(respuesta.estructuraNota);
+                        proxy.notasOrdenadas = proxy.notas;
+                        ordenarNotas();
+                        proxy.notasPorFilas = trozear();
+                        $scope.$apply();
+                    });
+                    break;
+                case 'eliminar':
+                    break;
+            }
+            cerrarModal();
+        },
+        clickExterno: function(evt){
+            this.cancelar(evt);
+        },
+        clickInterno: function(evt){
+            evt.stopPropagation();
+        },
+        enviar: function(evt){
+            evt.stopPropagation();
+            this.hacerPeticion();
+        },
+        cancelar: function(evt){
+            evt.stopPropagation();
+            cerrarModal();
+        }
+    }
+
+    const abrirModal = function({textoTipo, tipo, hacerPeticion}){
+        proxy.estiloSegundoPlano = estiloDifuminado;
+        proxy.modalDatos = Object.assign({textoTipo, tipo, hacerPeticion}, manejadorBase);
+    };
+    const cerrarModal = function(){
+        proxy.modalDatos = null;
+        proxy.estiloSegundoPlano = null;
+    };
+    // Obtener el arreglo de notas de sessionStorage
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
+    // Si el arreglo está vacío, empty es verdadero
     proxy.empty = proxy.notas.length < 1;
+    proxy.notasOrdenadas = proxy.notas;
     proxy.estiloSegundoPlano = null;
     ordenarNotas();
     proxy.notasPorFilas = trozear();
     proxy.crearNota = function(){
-        proxy.estiloSegundoPlano = proxy.estiloSegundoPlano ? null : estiloDifuminado;
-        console.log("+Crear presionado");
+        abrirModal({
+            textoTipo: "Crear Nota",
+            tipo: "crear"
+        });
     };
     servicioPrincipal.getIdentidad(function(respuesta){
         proxy.datosUsuario = respuesta.usuario;
-        console.log(proxy.datosUsuario);
         proxy.nombreUsuario = respuesta.usuario.primerNombre + 
           (respuesta.usuario.primerApellido? ' ' + respuesta.usuario.primerApellido: '');
         $scope.$apply();
