@@ -16,8 +16,11 @@
             <div class="col-md-6">
                 <img src="./recursos/mis_notas2.png" alt="logo" class="barra-icono">
             </div>
-            <div class="col-md-6 text-sm-center text-md-right">
+            <div class="col-md-4 text-sm-center text-md-right">
                 <span ng-bind="ctrl.nombreUsuario" class="barra-caja-usuario"></span>
+            </div>
+            <div class="col-md-2 text-md-center text-sm-right">
+                <button class="btn btn-danger btn-cerrar-sesion" ng-click="ctrl.cerrarSesion()">Cerrar sesión</button>
             </div>
         </div>
         <div class="row">

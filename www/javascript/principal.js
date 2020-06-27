@@ -217,6 +217,12 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
         });
     }
 
+    proxy.cerrarSesion = function(){
+        localStorage.removeItem('notasToken');
+        sessionStorage.removeItem('notas');
+        window.location.assign('/');
+    }
+
     servicioPrincipal.getIdentidad(function(respuesta){
         proxy.datosUsuario = respuesta.usuario;
         proxy.nombreUsuario = respuesta.usuario.primerNombre + 
