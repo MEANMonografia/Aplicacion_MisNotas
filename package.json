@@ -1,6 +1,6 @@
 {
   "name": "misnotas",
-  "version": "0.5.0",
+  "version": "0.8.0",
   "description": "Aplicacion para guardar notas personales que sirve de ilustracion sobre un login sencillo y operaciones CRUD",
   "main": "index.js",
   "scripts": {
