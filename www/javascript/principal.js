@@ -77,6 +77,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
     // Ordena las notas para posicionar las notas fijas de primero (de la más reciente a la más antigua)
     const ordenarNotas = function(){
         proxy.empty = proxy.notas.length < 1;
+        proxy.notasOrdenadas = proxy.notas;
         proxy.notasOrdenadas.sort(function(a, b){
             if(a.esFija) return -1;
             if(b.esFija) return 1;
@@ -114,7 +115,6 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         esFija: proxy.modalDatos.notaEsFija? true:false
                     }, function(respuesta){
                         proxy.notas.push(respuesta.estructuraNota);
-                        proxy.notasOrdenadas = proxy.notas;
                         ordenarNotas();
                         proxy.notasPorFilas = trozear();
                         $scope.$apply();
@@ -127,8 +127,13 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         contenido: proxy.modalDatos.notaContenido,
                         esFija: proxy.modalDatos.notaEsFija?true:false
                     }, function(respuesta){
-                        proxy.notas.push(respuesta.estructuraNota);
-                        proxy.notasOrdenadas = proxy.notas;
+                        let i = 1;
+                        for(i = 0; i < proxy.notas.length; i++){
+                            if(proxy.notas[i]._id === respuesta.estructuraNota._id){
+                                break;
+                            }
+                        }
+                        proxy.notas.splice(i, 1, respuesta.estructuraNota);
                         ordenarNotas();
                         proxy.notasPorFilas = trozear();
                         $scope.$apply();
@@ -155,9 +160,9 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
         }
     }
 
-    const abrirModal = function({textoTipo, tipo, hacerPeticion}){
+    const abrirModal = function(datos){
         proxy.estiloSegundoPlano = estiloDifuminado;
-        proxy.modalDatos = Object.assign({textoTipo, tipo, hacerPeticion}, manejadorBase);
+        proxy.modalDatos = Object.assign(datos, manejadorBase);
     };
     const cerrarModal = function(){
         proxy.modalDatos = null;
@@ -177,6 +182,18 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
             tipo: "crear"
         });
     };
+
+    proxy.modificarNota = function(nota){
+        abrirModal({
+            textoTipo: "Modificar Nota",
+            tipo: "modificar",
+            _id: nota._id,
+            notaTitulo: nota.titulo,
+            notaContenido: nota.contenido,
+            notaEsFija: nota.esFija
+        });
+    }
+
     servicioPrincipal.getIdentidad(function(respuesta){
         proxy.datosUsuario = respuesta.usuario;
         proxy.nombreUsuario = respuesta.usuario.primerNombre + 
