@@ -70,6 +70,16 @@
     color: #031926;
 }
 
+.btn.boton-rojo{
+    background-color: #dc3545;
+    color: #F0FFFF;
+    font-weight: bold;
+}
+
+.btn.boton-rojo:hover{
+    color: #031926;
+}
+
 .texto-rojo{
     color: #F55D3E;
 }

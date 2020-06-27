@@ -27,6 +27,9 @@
                     <button class="btn boton-peligro" ng-click="referenciaNota.cancelar($event)">
                         Cancelar
                     </button>
+                    <button class="btn boton-rojo" ng-click="referenciaNota.eliminar($event)" ng-show="referenciaNota.tipo === 'modificar'">
+                        Borrar
+                    </button>
                     <div class="form-check modal-check">
                         <input type="checkbox" name="es-fija" id="es-fija" ng-model="referenciaNota.notaEsFija" class="form-check-input">
                         <label for="es-fija" class="form-check-label">

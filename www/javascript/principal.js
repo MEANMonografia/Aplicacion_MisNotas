@@ -79,6 +79,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
         proxy.empty = proxy.notas.length < 1;
         proxy.notasOrdenadas = proxy.notas;
         proxy.notasOrdenadas.sort(function(a, b){
+            if(a.esFija && b.esFija) return 0;
             if(a.esFija) return -1;
             if(b.esFija) return 1;
             return 0;
@@ -127,7 +128,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         contenido: proxy.modalDatos.notaContenido,
                         esFija: proxy.modalDatos.notaEsFija?true:false
                     }, function(respuesta){
-                        let i = 1;
+                        let i = -1;
                         for(i = 0; i < proxy.notas.length; i++){
                             if(proxy.notas[i]._id === respuesta.estructuraNota._id){
                                 break;
@@ -139,9 +140,24 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         $scope.$apply();
                     });
                     break;
-                case 'eliminar':
-                    break;
             }
+            cerrarModal();
+        },
+        autodestruir: function(){
+            let respaldoLocal = proxy.modalDatos;
+            servicioPrincipal.eliminarNotas([respaldoLocal._id], function(respuesta){
+                if(respuesta.error) return console.error(respuesta.error);
+                let i = -1;
+                for(i = 0; i < proxy.notas.length; i++){
+                    if(proxy.notas[i]._id === respaldoLocal._id){
+                        break;
+                    }
+                }
+                proxy.notas.splice(i, 1);
+                ordenarNotas();
+                proxy.notasPorFilas = trozear();
+                $scope.$apply();
+            });
             cerrarModal();
         },
         clickExterno: function(evt){
@@ -157,6 +173,10 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
         cancelar: function(evt){
             evt.stopPropagation();
             cerrarModal();
+        },
+        eliminar: function(evt){
+            evt.stopPropagation();
+            this.autodestruir();
         }
     }
 
@@ -167,6 +187,7 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
     const cerrarModal = function(){
         proxy.modalDatos = null;
         proxy.estiloSegundoPlano = null;
+        sessionStorage.setItem('notas', JSON.stringify(proxy.notas));
     };
     // Obtener el arreglo de notas de sessionStorage
     proxy.notas = JSON.parse(sessionStorage.getItem('notas'));
