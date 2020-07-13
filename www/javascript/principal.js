@@ -88,14 +88,15 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
 
     // Dividir las notas en filas para poder recorrerlas de una forma más intuitiva en la vista
     const trozear = function(){
+        const partesIguales = 4;
         let longitudTotal = proxy.notasOrdenadas.length;
-        let extra = longitudTotal % 4;
-        let filas = (longitudTotal-extra)/4;
+        let extra = longitudTotal % partesIguales;
+        let filas = (longitudTotal-extra)/partesIguales;
         let retorno = [];
         for(let i = 0; i < filas; i++){
             let actual = [];
-            for(let j = 0; j < 4; j++){
-                actual.push(proxy.notasOrdenadas[(i*4)+j]);
+            for(let j = 0; j < partesIguales; j++){
+                actual.push(proxy.notasOrdenadas[(i*partesIguales)+j]);
             }
             retorno.push(actual);
         }

@@ -35,7 +35,7 @@
         <!-- la directiva ng-repeat es como un forEach realizado sobre un arreglo del controlador -->
         <!-- En este caso, la directiva se utiliza para generar filas y columnas que contengan las notas del usuario -->
         <div class="row" ng-repeat="fila in ctrl.notasPorFilas">
-            <div class="col-md-3" ng-repeat="nota in fila">
+            <div class="col-sm" ng-repeat="nota in fila">
                 <directiva-nota informacion="nota" ng-click="ctrl.modificarNota(nota)"/>
             </div>
         </div>
