@@ -37,7 +37,7 @@ app.get('/principal', function(req, res, next){
 
 app.use('/api', api);
 
-app.use((req, res, next)=>{
+app.use(function(req, res, next){
     res.status(404).write("Oops! Error 404: Parece que esta ruta es incorrecta");
     res.end();
 });
