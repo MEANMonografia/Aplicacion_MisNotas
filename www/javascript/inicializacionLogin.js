@@ -1,6 +1,6 @@
 (function() {
     let token = localStorage.getItem("notasToken");
-    console.log(token)
+    // console.log(token)
     if (token) {   
         let cuerpo = JSON.stringify({
             token: token
@@ -21,7 +21,7 @@
                 sessionStorage.removeItem("notas");
                 return console.error(respuesta.error);
             }
-            console.log(respuesta.notas);
+            // console.log(respuesta.notas);
             sessionStorage.setItem("notas", JSON.stringify(respuesta.notas));
             window.location.replace('/principal');
         }).catch(function(error){

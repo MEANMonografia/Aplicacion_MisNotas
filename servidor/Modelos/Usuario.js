@@ -141,7 +141,10 @@ usuarioEsquema.statics.crearNota = function(token, datosNota, retrollamada){
         if(encontrarError) return retrollamada(encontrarError, null);
         if(!sesion) return retrollamada(new Error("No existe una sesion valida pertenenciente al token recibido."), null);
         // Verificar si la sesion es válida
-        sesion.esValida(function(validaError, esValida){
+        sesion.esValida(function(validaError, esValida){ // --------************************************************
+            // *****************************************************************************************************
+            // *****************************************************************************************************
+            // *****************************************************************************************************
             if(validaError) return retrollamada(validaError, null);
             if(!esValida) return retrollamada(new Error("Token expirado"), null);
             // Encontrar el usuario asociado a la sesion

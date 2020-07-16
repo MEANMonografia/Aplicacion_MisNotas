@@ -116,6 +116,11 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         contenido: proxy.modalDatos.notaContenido,
                         esFija: proxy.modalDatos.notaEsFija? true:false
                     }, function(respuesta){
+                        if(respuesta.error) {
+                            console.error(respuesta.error);
+                            alert('Sesión expirada!');
+                            return proxy.cerrarSesion();
+                        }
                         proxy.notas.push(respuesta.estructuraNota);
                         ordenarNotas();
                         proxy.notasPorFilas = trozear();
@@ -130,6 +135,11 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
                         contenido: proxy.modalDatos.notaContenido,
                         esFija: proxy.modalDatos.notaEsFija?true:false
                     }, function(respuesta){
+                        if(respuesta.error) {
+                            console.error(respuesta.error);
+                            alert('Sesión expirada!');
+                            return proxy.cerrarSesion();
+                        }
                         let i = -1;
                         for(i = 0; i < proxy.notas.length; i++){
                             if(proxy.notas[i]._id === respuesta.estructuraNota._id){
@@ -149,7 +159,11 @@ ModuloPrincipal.controller("ControladorPrincipal", ['ServicioPrincipal', '$scope
         autodestruir: function(){
             let respaldoLocal = proxy.modalDatos;
             servicioPrincipal.eliminarNotas([respaldoLocal._id], function(respuesta){
-                if(respuesta.error) return console.error(respuesta.error);
+                if(respuesta.error){
+                    console.error(respuesta.error);
+                    alert('Sesión expirada!');
+                    return proxy.cerrarSesion();
+                }
                 let i = -1;
                 for(i = 0; i < proxy.notas.length; i++){
                     if(proxy.notas[i]._id === respaldoLocal._id){
