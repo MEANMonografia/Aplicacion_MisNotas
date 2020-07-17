@@ -251,7 +251,8 @@ ModuloPrincipal.directive("directivaNota", [function(){
     return {
         restrict: 'E',
         scope: {
-            datosNota: '=informacion'
+            datosNota: '=informacion',
+            manejadorClick: '&retrollamada'
         },
         templateUrl: './recursos/nota.html'
     };
