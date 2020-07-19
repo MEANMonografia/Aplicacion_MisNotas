@@ -98,5 +98,6 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
         controladorIndex.mensajeFooter = controladorIndex.mensajeFooter == mensajeTextoFooterRegistro ? mensajeTextoFooterLogin : mensajeTextoFooterRegistro;
         controladorIndex.btnPrincipal = controladorIndex.btnPrincipal == mensajeBotonLogin ? mensajeBotonRegistro : mensajeBotonLogin;
         controladorIndex.controlSwitch = !controladorIndex.controlSwitch;
+        controladorIndex.mensajeError =  "";
     }
 }]);
