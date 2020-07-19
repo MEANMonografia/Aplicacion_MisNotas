@@ -99,5 +99,10 @@ modulo.controller("controladorIndex", ['$scope', function ($scope) {
         controladorIndex.btnPrincipal = controladorIndex.btnPrincipal == mensajeBotonLogin ? mensajeBotonRegistro : mensajeBotonLogin;
         controladorIndex.controlSwitch = !controladorIndex.controlSwitch;
         controladorIndex.mensajeError =  "";
+        controladorIndex.txtUsername = "";
+        controladorIndex.txtPassword = "";
+        controladorIndex.txtNombre = "";
+        controladorIndex.txtApellido = "";
+        controladorIndex.txtConfirmPassword = "";
     }
 }]);
