@@ -28,6 +28,6 @@
   "homepage": "https://bitbucket.org/RickAr2/misnotas#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.9.16"
+    "mongoose": "^5.13.15"
   }
 }
